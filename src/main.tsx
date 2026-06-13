@@ -1,8 +1,18 @@
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import "./App.css";
+import "./index.css";
 
 
 import App from "./App.tsx";
+import { ThemeProvider } from "@/shared/context/ThemeContext";
+import { ErrorBoundary } from "./shared/components/ErrorBoundary";
 
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(
+    <ThemeProvider>
+      <BrowserRouter>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </BrowserRouter>
+    </ThemeProvider>
+  );

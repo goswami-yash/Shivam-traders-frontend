@@ -1,10 +1,19 @@
 import axios from "@/providers/axios/axiosInstance";
 import { API_ENDPOINTS } from "@/providers/api/api-config";
-import { AddDieselPayload, CreateOrderPayload,SelectOrderPayload } from "../types/OrderTypes";
+import { AddDieselPayload, CreateOrderPayload,CustomersAddress,CustomersItemPrice,CustomersPayment,getSupplierAddress,SelectOrderPayload, SuppliersItemPrice } from "../types/OrderTypes";
 
 export const getVehicles = async () => {
   try {
     const response = await axios.get(API_ENDPOINTS.orders.getVehicles);
+    return response.data;
+  } catch (error: any) {
+    throw error?.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const getDriver = async () => {
+  try {
+    const response = await axios.get(API_ENDPOINTS.orders.getDriver);
     return response.data;
   } catch (error: any) {
     throw error?.response?.data || { message: "Something went wrong" };
@@ -29,6 +38,42 @@ export const getItems = async () => {
   }
 };
 
+export const getSupplier = async () => {
+  try {
+    const response = await axios.get(API_ENDPOINTS.orders.getSupplier);
+    return response.data;
+  } catch (error: any) {
+    throw error?.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const getSupplierAddess = async (credentials:getSupplierAddress) => {
+  try {
+    const response = await axios.post(API_ENDPOINTS.orders.getSupplierAddess,credentials);
+    return response.data;
+  } catch (error: any) {
+    throw error?.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const getSupplierItemPrice = async (credentials:SuppliersItemPrice) => {
+  try {
+    const response = await axios.post(API_ENDPOINTS.orders.getSupplierItemPrice ,credentials);
+    return response.data;
+  } catch (error: any) {
+    throw error?.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const getSupplierPayment = async (credentials:SuppliersItemPrice) => {
+  try {
+    const response = await axios.post(API_ENDPOINTS.orders.getSupplierPayment,credentials);
+    return response.data;
+  } catch (error: any) {
+    throw error?.response?.data || { message: "Something went wrong" };
+  }
+};
+
 export const getCustomers = async () => {
   try {
     const response = await axios.get(API_ENDPOINTS.orders.getCustomers);
@@ -38,9 +83,36 @@ export const getCustomers = async () => {
   }
 };
 
-export const createOrders = async (payload: CreateOrderPayload) => {
+export const getCustomerAddess = async (credentials:CustomersAddress) => {
   try {
-    const response = await axios.post(API_ENDPOINTS.orders.createorder, payload);
+    const response = await axios.post(API_ENDPOINTS.orders.getCustomerAddess,credentials);
+    return response.data;
+  } catch (error: any) {
+    throw error?.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const getCustomerItemPrice = async (credentials:CustomersItemPrice) => {
+  try {
+    const response = await axios.post(API_ENDPOINTS.orders.getCustomerItemPrice ,credentials);
+    return response.data;
+  } catch (error: any) {
+    throw error?.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const getCustomerPayment = async (credentials:CustomersPayment) => {
+  try {
+    const response = await axios.post(API_ENDPOINTS.orders.getCustomerPayment,credentials);
+    return response.data;
+  } catch (error: any) {
+    throw error?.response?.data || { message: "Something went wrong" };
+  }
+};
+
+export const getPartners = async () => {
+  try {
+    const response = await axios.get(API_ENDPOINTS.orders.getPartners);
     return response.data;
   } catch (error: any) {
     throw error?.response?.data || { message: "Something went wrong" };
@@ -101,7 +173,7 @@ export const getDiesel = async (payload : AddDieselPayload) => {
 
 export const SetDiesel = async (payload : any) => {
   try {
-    const response = await axios.post(API_ENDPOINTS.orders.getDiesel,payload);
+    const response = await axios.post(API_ENDPOINTS.orders.updateDetails,payload);
     return response.data;
   } catch (error: any) {
     throw error?.response?.data || { message: "Something went wrong" };

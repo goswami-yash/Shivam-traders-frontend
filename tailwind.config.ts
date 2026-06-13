@@ -33,22 +33,24 @@ export default {
         // 	foreground: 'hsl(var(--secondary-foreground))'
         // },
         primary: {
-          DEFAULT: "#ffc107", // main color
-          light: "#ffe082", // lighter (backgrounds)
-          dark: "#ba8b00", // darker (hover, active, text)
-          darker: "#b38a04", // darkest (dark mode active bg)
-          contrast: "#e6ac00", // strong text color on dark mode
-          pagebgfrom: "#fffef5", // very light background for pages
-          pagebgvia: "#fdfbe9", // very light background for pages
-          pagebgto: "#f9f6dd", // very light background for pages
-          pagebgdark: "#54481e", // very light background for pages
+          DEFAULT: "#2563EB", // Main Blue
+          light: "#60A5FA",   // Light Blue
+          dark: "#1D4ED8",    // Hover Blue
+          darker: "#1E40AF",  // Active Blue
+          contrast: "#DBEAFE",
+        
+          pagebgfrom: "#F8FAFC",
+          pagebgvia: "#F1F5F9",
+          pagebgto: "#E2E8F0",
+          pagebgdark: "#0F172A",
         },
-        secondary: { // teal based
-          DEFAULT: "#00897b",
-          light: "#4db6ac",
-          dark: "#00695c",
-          darker: "#004d40",
-          contrast: "#1de9b6",
+        
+        secondary: {
+          DEFAULT: "#F97316", // Orange
+          light: "#FB923C",
+          dark: "#EA580C",
+          darker: "#C2410C",
+          contrast: "#FED7AA",
         },
         destructive: {
           DEFAULT: "hsl(var(--destructive))",

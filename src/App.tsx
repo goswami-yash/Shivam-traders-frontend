@@ -1,40 +1,49 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./pages/Layout";
-import Login from "./features/AUTH/components/Login";
-
+import { useNavigate } from "react-router-dom";
+import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { AuthProvider } from "@/features/AUTH/context/AuthContext";
-import { RequireAuth, RedirectIfAuth } from "@/providers/AuthGuard";
-import CreateOrder from "./features/ORDERS/components/CreateOrder";
-import OrderList from "./features/ORDERS_LIST/components/OrderList";
-import SelectOrder from "./features/ORDERS_LIST/components/SelectOrder";
-import DieselAdd from "./features/ORDERS_LIST/components/dieselAdd";
-function App() {
+import { AppToaster } from "./shared/components/ui/AppToaster";
+import { useEffect } from "react";
+import { setRedirectToLogin } from "./shared/services/redirectService";
+import { abort } from "@/shared/utils/abortController";
+import AppRoutes from "./AppRoutes";
+
+const App = () => {
   return (
-    <BrowserRouter>
+    <TooltipProvider>
+      <AppToaster />
       <AuthProvider>
-        <Routes>
-
-          {/* Login (only if not logged in) */}
-          <Route element={<RedirectIfAuth />}>
-            <Route path="/login" element={<Login />} />
-          </Route>
-
-          {/* Protected */}
-          <Route element={<RequireAuth />}>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<div>Home</div>} />
-              <Route path="create-order" element={<CreateOrder />} />
-              <Route path="Order-list" element={<OrderList/>} />
-              <Route path="select-order" element={<SelectOrder />} />
-              <Route path="Add-diesel" element={<DieselAdd />} />
-              <Route path="about" element={<div>About</div>} />
-            </Route>
-          </Route>
-
-        </Routes>
+        <AppContent />
       </AuthProvider>
-    </BrowserRouter>
+    </TooltipProvider>
   );
-}
+};
+
+const AppContent = () => {
+  const navigate = useNavigate();
+  // const location = useLocation();
+  // const isFirstRender = useRef(true);
+
+  // redirect handler
+
+  useEffect(() => {
+    setRedirectToLogin(() => {
+      localStorage.clear();
+      abort.abortAll(); // ✅ cancel all API
+      navigate("/login");
+    });
+  }, [navigate]);
+
+  // cancel API on route change
+  // useEffect(() => {
+  //   if (isFirstRender.current) {
+  //     isFirstRender.current = false;
+  //     return;
+  //   }
+
+  //   abort.abortAll();
+  // }, [location.pathname]);
+
+  return <AppRoutes />;
+};
 
 export default App;
