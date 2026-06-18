@@ -3,7 +3,7 @@ import SidebarAdmin from "../components/SidebarAdmin";
 
 const AdminPage = () => {
   return (
-    <div className="flex min-h-[calc(100vh-64px)] bg-slate-50 dark:bg-slate-950">
+    <div className="flex min-h-[calc(100vh-64px)] dark:bg-slate-950 overflow-hidden bg-slate-50">
       <SidebarAdmin />
 
       <main className="flex-1 p-6 overflow-auto">

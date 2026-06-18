@@ -4,7 +4,7 @@ import { getAdminList } from "../services/adminServuces";
 import { useEffect, useState } from "react";
 
 
-export default function DriverPage() {
+export default function ItemPage() {
 
   const [data, setData] = useState("");
   const [pagination, setPagination] = useState({
@@ -19,12 +19,12 @@ export default function DriverPage() {
 
   useEffect(() => {
     
-    getdriverlist();
+    getItemList();
   }, [pagination.currentPage, pagination.pageSize, filters.search]);
 
-  const getdriverlist = async () => {
+  const getItemList = async () => {
     try {
-      const data = await getAdminList("DriverList", pagination.currentPage, pagination.pageSize,filters);
+      const data = await getAdminList("ItemList", pagination.currentPage, pagination.pageSize,filters);
       setData(data.result || []);
 
       setPagination((prev) => ({
@@ -39,10 +39,10 @@ export default function DriverPage() {
   return (
 
     <TableBody
-      tableConfig={TableContent.DriverList}
+      tableConfig={TableContent.ItemList}
       data={data}
-      type='Driver'
-      refreshData={getdriverlist}
+      type='Item'
+      refreshData={getItemList}
       setPagination={setPagination}
       pagination={pagination}
       filters={filters}

@@ -51,21 +51,27 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex bg-gray-50">
+    <div className="min-h-screen flex bg-slate-100 dark:bg-slate-950 transition-colors">
       
       {/* LEFT SIDE */}
-      <div className="hidden lg:flex w-1/2 bg-linear-to-br from-blue-600 to-indigo-700 text-white p-16 flex-col justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Shivam Traders</h1>
+      <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-700 via-indigo-700 to-purple-800 text-white p-16 flex-col justify-between">
+      <div className="flex flex-col justify-center h-full">
+  <h1 className="text-4xl font-bold">
+    Shivam Traders
+  </h1>
 
-          <div className="mt-20">
-            <h2 className="text-5xl font-extrabold leading-tight">
-              Smart Trading <br /> Made Simple
-            </h2>
+  <div className="mt-16">
+  <h2 className="text-6xl font-extrabold leading-tight">
+  Smart Trading
+  <br />
+  Made Simple
+</h2>
 
-            <p className="mt-6 text-lg text-blue-100 max-w-md">
-              Manage your business, track orders, and grow faster with our platform.
-            </p>
+<p className="mt-6 text-xl text-blue-100 max-w-lg leading-relaxed">
+  Manage your business, track orders,
+  inventory, suppliers and sales
+  from one powerful dashboard.
+</p>
           </div>
         </div>
 
@@ -75,18 +81,19 @@ export default function LoginPage() {
       </div>
 
       {/* RIGHT SIDE */}
-      <div className="flex w-full lg:w-1/2 items-center justify-center px-6">
+      <div className="flex w-full lg:w-1/2 items-center justify-center px-6 bg-slate-50 dark:bg-slate-950">
         
-        <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
+      <div className=" w-full max-w-md bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-2xl border  border-slate-200 dark:border-slate-700 ">
           
           {/* HEADER */}
           <div className="mb-8 text-center">
-            <h2 className="text-2xl font-bold text-gray-800">
-              Welcome Back
-            </h2>
-            <p className="text-gray-500 text-sm mt-1">
-              Login to continue
-            </p>
+          <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
+  Welcome Back
+</h2>
+
+<p className="text-slate-500 dark:text-slate-400 mt-2">
+  Login to continue
+</p>
           </div>
 
           {/* ERROR */}
@@ -110,7 +117,8 @@ export default function LoginPage() {
                 value={form.mobile_no}
                 onChange={handleChange}
                 placeholder="Enter mobile number"
-                className="mt-1 w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                className=" w-full px-4 py-3 border border-slate-300 dark:border-slate-700 rounded-lg
+bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
               />
             </div>
 
@@ -148,7 +156,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-60"
+              className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-60"
             >
               {loading ? "Logging in..." : "Login"}
             </button>

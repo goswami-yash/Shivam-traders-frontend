@@ -34,9 +34,9 @@ const Layout = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="h-screen flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors duration-300 overflow-hidden">
       {/* HEADER */}
-      <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm">
+      <header className="sticky top-0 z-50 w-full border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-sm flex-shrink-0">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           {/* LEFT */}
           <div className="flex items-center gap-4 sm:gap-8">
@@ -191,12 +191,12 @@ const Layout = () => {
       </header>
 
       {/* BODY */}
-      <div className="flex flex-1">
-    
-        {/* PAGE CONTENT */}
-        <main className="flex-1 px-4 sm:px-6 py-4 overflow-auto text-gray-900 dark:text-gray-100">
+      <div className="flex flex-1 overflow-hidden">
+
+        <main className="flex-1 overflow-y-auto px-4 sm:px-6 py-4 text-gray-900 dark:text-gray-100">
           <Outlet />
         </main>
+
       </div>
     </div>
   );

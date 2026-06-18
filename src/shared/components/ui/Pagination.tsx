@@ -85,11 +85,11 @@ export const Pagination = ({
         <Select
           value={pagination.pageSize.toString()} // ✅ controlled value
           onValueChange={(value) =>
-            setPagination({
-              ...pagination,
+            setPagination((prev) => ({
+              ...prev,
               pageSize: Number(value),
               currentPage: 1,
-            })
+            }))
           }
         >
           <SelectTrigger className="w-15">

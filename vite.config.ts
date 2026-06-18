@@ -9,7 +9,7 @@ export default defineConfig(() => ({
     port: 8080,
     proxy: {
       "/api": {
-       target:"http://192.168.0.65:3021", // your backend IP and port
+       target:"http://192.168.1.65:3021", // your backend IP and port
         changeOrigin: true,
         secure: false,
       },

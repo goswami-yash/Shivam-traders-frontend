@@ -19,13 +19,12 @@ import {
 import { Customer, Customers, Item, Labourer, partners, Supplier, SupplierAddress, SupplierItemPrice, SupplierPayment, Vehicle } from "../types/OrderTypes";
 import { useAuth } from "@/features/AUTH/context/AuthContext";
 
-
-
 type MenuProps = {
   link: string;
   label: string;
 
 }
+
 export default function CreateOrder() {
   //export default function CreateOrder({props: MenuProps}) {
   const { user } = useAuth();
@@ -95,10 +94,12 @@ export default function CreateOrder() {
   const fetchItems = () => {
     if (!items.length) getItems().then((res) => setItems(res?.result || []));
   };
+
   const fetchLabours = () => {
     if (!labours.length)
       getLaburers().then((res) => setLabours(res?.result || []));
   };
+
   const fetchCustomers = () => {
     if (!customers.length)
       getCustomers().then((res) => setCustomers(res?.result || []));
@@ -113,6 +114,7 @@ export default function CreateOrder() {
     if (!partners.length)
       getPartners().then((res) => setPartners(res?.result || []));
   };
+
   // ---------------- HANDLERS ----------------
   const handleChange = (e: any) => {
     const { name, value } = e.target;
@@ -125,7 +127,6 @@ export default function CreateOrder() {
 
     setForm((prev: any) => ({ ...prev, [name]: value }));
   };
-
 
   useEffect(() => {
     const found = vehicles.find(
@@ -148,7 +149,6 @@ export default function CreateOrder() {
     );
   }, [form.driver_name, drivers]);
 
-
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
@@ -158,7 +158,6 @@ export default function CreateOrder() {
 
   // ------------------ CALCULATION -------------------
   const vehicleWeight = Number(form.total_loaded_weight || 0);
-
 
   const totalBhada =
     Number(form.total_loaded_weight || 0) *
@@ -172,9 +171,7 @@ export default function CreateOrder() {
     0
   );
 
-
   const isWeightExceeded = totalLabourWeight > vehicleWeight;
-
 
 
   //---------------------- ITEM VALIDATION -----------------------------
@@ -314,8 +311,6 @@ export default function CreateOrder() {
     form.purchase,
     form.delivery,
   ]);
-
-
 
   // ---------------- DYNAMIC ARRAYS ----------------
   const addRow = (
@@ -612,20 +607,25 @@ export default function CreateOrder() {
     <div className="page-container">
       {/* HEADER */}
       <div className="text-center md:text-left mt-4">
-        <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">
+
+        <h1 className="text-4xl font-extrabold  bg-white dark:bg-slate-900 text-slate-900 dark:text-white tracking-tight">
           Create Order
         </h1>
-        <p className="text-base text-slate-500 mt-2 font-medium">
+
+        <p className="text-base mt-2 font-medium  bg-white dark:bg-slate-900 text-slate-900 dark:text-white tracking-tight">
           Log your new transport details and operational drops.
         </p>
+
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8 pb-20">
         {/* SECTION: TRIP & TRANSPORT & VEHICLE */}
-        <div className="form-card">
-          <div className="section-title">વાહન અને પરિવહન વિગતો</div>
+        <div className="form-card  bg-white dark:bg-slate-900 text-slate-900 dark:text-white tracking-tight">
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="section-title  bg-white dark:bg-slate-900 text-slate-900 dark:text-white tracking-tight">વાહન અને પરિવહન વિગતો</div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  bg-white dark:bg-slate-900 text-slate-900 dark:text-white tracking-tight">
+
             <div>
               <label className="input-label">
                 વાહન નંબર <span className="required-star">*</span>
@@ -803,7 +803,6 @@ export default function CreateOrder() {
               />
             </div>
 
-
             <div>
               <label className="input-label">શરૂ તારીખ</label>
               <input
@@ -814,6 +813,7 @@ export default function CreateOrder() {
                 className="input-field"
               />
             </div>
+
             <div>
               <label className="input-label">
                 કુલ ડિલિવરી વજન (ટન) <span className="required-star">*</span>
@@ -843,6 +843,7 @@ export default function CreateOrder() {
                 className="input-field"
               />
             </div>
+
             <div>
               <label className="input-label">અંતિમ તારીખ</label>
               <input
@@ -859,6 +860,7 @@ export default function CreateOrder() {
               <label className="input-label">
                 બિલ્ટી ફોટો પસંદ કરો <span className="required-star">*</span>
               </label>
+
               <div
                 onClick={() =>
                   submitStep === "idle" && fileInputRef.current?.click()
@@ -903,6 +905,7 @@ export default function CreateOrder() {
                   </span>
                 )}
               </div>
+
             </div>
 
             <div >
@@ -936,6 +939,7 @@ export default function CreateOrder() {
         <div className="form-card">
           <div className="section-title">નાણાકીય વિગતો</div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
             <div>
               <label className="input-label">વાહન ભારિત કિંમત / ટન (₹)</label>
               <input
@@ -946,6 +950,7 @@ export default function CreateOrder() {
                 className="input-field"
               />
             </div>
+
             <div>
               <label className="input-label"> અન્ય ખર્ચ (₹)</label>
               <input
@@ -956,6 +961,7 @@ export default function CreateOrder() {
                 className="input-field"
               />
             </div>
+
             <div>
               <label className="input-label">મુસાફરી ભથ્થું (₹)</label>
               <input
@@ -966,6 +972,7 @@ export default function CreateOrder() {
                 className="input-field"
               />
             </div>
+
             <div>
               <label className="input-label"> એડવાન્સ (₹)</label>
               <input
@@ -976,6 +983,7 @@ export default function CreateOrder() {
                 className="input-field"
               />
             </div>
+
             <div>
               <label className="input-label">બાકી ભાડું (₹)</label>
               <input
@@ -985,6 +993,7 @@ export default function CreateOrder() {
                 className="input-field bg-yellow-50 font-bold text-yellow-800"
               />
             </div>
+
             <div>
               <label className="input-label">કુલ ભાડું (₹)</label>
               <input

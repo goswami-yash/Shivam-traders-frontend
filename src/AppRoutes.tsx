@@ -11,6 +11,11 @@ import UserManagementPage from "./features/UserManagement/pages/UserManagementPa
 import AdminPage from "./features/ADMIN/pages/AdminPage";
 import Drivers from "./features/ADMIN/components/Drivers";
 import Vehicles from "./features/ADMIN/components/Vehicles";
+import AddTableBody from "./features/ADMIN/pages/AddTableBody";
+import CustomerPage from "./features/ADMIN/components/Customer";
+import SupplierPage from "./features/ADMIN/components/Supplier";
+import  ItemPage  from "./features/ADMIN/components/Item";
+
 
 function AppRoutes() {
   return (
@@ -35,9 +40,12 @@ function AppRoutes() {
             <Route path="/admin-action" element={<AdminPage />}>
               <Route path="drivers" element={<Drivers />} />
               <Route path="vehicles" element={<Vehicles />} />
+              <Route path="Customer" element={<CustomerPage />} />
+              <Route path="Supplier" element={<SupplierPage />} />
+              <Route path="Item" element={<ItemPage />} />
+              <Route path=":type/create" element={<AddTableBody />} />
+
             </Route>
-
-
           </Route>
         </Route>
         <Route path="*" element={<Navigate to="/" replace />} />

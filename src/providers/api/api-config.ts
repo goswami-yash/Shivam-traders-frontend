@@ -29,19 +29,36 @@ export const API_ENDPOINTS = {
     addUser : '/user/manage/get/user/creat',
     UpdateUser : '/user/manage/get/user/update',
     DeleteUser : '/user/manage/get/user/delete',
-    getVehicleList : '/user/manage/get/vehicles/list',
-    addVehicle : '/user/manage/get/vehicles/creat',
-    UpdateVehicle : '/user/manage/get/vehicles/update',
-    DeleteVehicle : '/user/manage/get/vehicles/delete',
-    getSuplierList : '/user/manage/get/suplier/list',
-    addSuplier : '/user/manage/get/suplier/creat',
-    UpdateSuplier : '/user/manage/get/suplier/update',
-    DeleteSuplier : '/user/manage/get/suplier/delete',
-    getCustomerList : '/user/manage/get/customer/list',
-    addSCustomer: '/user/manage/get/customer/creat',
-    UpdateCustomer : '/user/manage/get/customer/update',
-    DeleteCustomer : '/user/manage/get/customer/delete',
-    getDriverList : "/user/manage/get/driver/list"
+
+    getVehicleList : '/admin/vehicle/list',
+    AddVehicle : '/admin/vehicle/create',
+    UpdateVehicle : '/admin/get/vehicle/update',
+    DeleteVehicle : '/admin/vehicle/delete',
+    getVehicleById : "/admin/vehicle/details/by_id",
+
+    getSupplierList : '/admin/supplier/list',
+    addSupplier : '/admin/supplier/create',
+    UpdateSupplier : '/admin/supplier/update',
+    DeleteSupplier : '/admin/supplier/delete',
+    getSupplierById : "/admin/supplier/details/by_id",
+
+    getCustomerList : '/admin/customer/list',
+    AddCustomer: '/admin/customer/create',
+    UpdateCustomer : '/admin/customer/update',
+    DeleteCustomer : '/admin/customer/delete',
+    getCustomerById : "/admin/customer/details/by_id",
+
+    getDriverList : "/admin/driver/list",
+    AddDriver : "/admin/driver/create",
+    UpdateDriver : "/admin/driver/update",
+    DeleteDriver : "/admin/driver/delete",
+    getDriverById : "/admin/driver/details/by_id",
+
+    getItemList : "/admin/item/list",
+    AddItem : "/admin/item/create",
+    UpdateItem : "/admin/item/update",
+    DeleteItem : "/admin/item/delete",
+    getItemById : "/admin/item/details/by_id",
   }
  
 };
