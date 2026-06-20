@@ -110,12 +110,100 @@ export const ItemList = {
   ],
 }
 
+export const PlotList = {
+  noDataText: "No Matching Data Found",
+  withFilters: true,
+  Header_Title : "PLOT LIST",
+  Button_Title : "PLOT ADD",
+  header: [
+    { title: "PLOT NO" },
+    { title: "PLOT NAME" },
+    { title: "ADDRESS" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "plot_number", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "plot_name", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "address", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const PartnerList = {
+  noDataText: "No Matching Data Found",
+  withFilters: true,
+  Header_Title : "PARTNER LIST",
+  Button_Title : "PARTNER ADD",
+  header: [
+    { title: "PARTNER NAME" },
+    { title: "MOBILE NO" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "mobile_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const TransporterList = {
+  noDataText: "No Matching Data Found",
+  withFilters: true,
+  Header_Title : "TRANSPORTER LIST",
+  Button_Title : "TRANSPORTER ADD",
+  header: [
+    { title: "TRANSPORTER NAME" },
+    { title: "MOBILE NO" },
+    { title: "EMAIL" },
+    { title: "COMPANY NAME" },
+    { title: "BANK NAME"},
+    { title: "ACCOUNT NO"},
+    { title: "IFSC CODE"},
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "mobile_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "email", type : "text"},
+    { key: "company_name",type : "text"},
+    { key: "bank_name" ,type : "text"},
+    { key: "account_no" ,isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "ifsc_code" ,type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const LabourerList = {
+  noDataText: "No Matching Data Found",
+  withFilters: true,
+  Header_Title : "LABOURER LIST",
+  Button_Title : "LABOURER ADD",
+  header: [
+    { title: "LABOURER NAME" },
+    { title: "MOBILE NO" },
+    { title: "AADHAR NO" },
+    { title: "ADDRESS" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "mobile_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "aadhar_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "address",type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
 export const TableContent = {
   DriverList,
   VehicleList,
   CustomerList,
   SupplierList,
-  ItemList
+  ItemList,
+  PlotList,
+  PartnerList,
+  TransporterList,
+  LabourerList
 };
 
 //-------------------------------------------
@@ -154,7 +242,7 @@ export const UpdateVehicle = {
     { title: "IS ACTIVE" },
   ],
   body: [
-    { key: "vehicle_number", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "vehicle_number",type : "text" },
     { key: "is_private" ,type : "Boolean"},
     { key: "is_active" ,type : "Boolean" },
   ],
@@ -218,13 +306,98 @@ export const UpdateItem = {
     { key: "is_active" ,type : "Boolean" },
   ],
 }
+
+export const UpdatePlot = {
+  noDataText: "No Matching Data Found",
+  withFilters: true,
+  Header_Title : "PLOT LIST",
+  Button_Title : "PLOT ADD",
+  header: [
+    { title: "PLOT NAME" },
+    { title: "PLOT NAME" },
+    { title: "ADDRESS" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "plot_number", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "plot_name", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "address", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const UpdatePartner = {
+  noDataText: "No Matching Data Found",
+  withFilters: true,
+  Header_Title : "PARTNER LIST",
+  Button_Title : "PARTNER ADD",
+  header: [
+    { title: "PARTNER NAME" },
+    { title: "MOBILE NO" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "mobile_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const UpdateTransporter = {
+  noDataText: "No Matching Data Found",
+  withFilters: true,
+  Header_Title : "TRANSPORTER LIST",
+  Button_Title : "TRANSPORTER ADD",
+  header: [
+    { title: "TRANSPORTER NAME" },
+    { title: "MOBILE NO" },
+    { title: "EMAIL" },
+    { title: "COMPANY NAME" },
+    { title: "BANK NAME"},
+    { title: "ACCOUNT NO"},
+    { title: "IFSC CODE"},
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "mobile_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "email", type : "text"},
+    { key: "company_name",type : "text"},
+    { key: "bank_name" ,type : "text"},
+    { key: "account_no" ,isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "ifsc_code" ,type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const UpdateLabourer = {
+  noDataText: "No Matching Data Found",
+  withFilters: true,
+  Header_Title : "LABOURER LIST",
+  Button_Title : "LABOURER ADD",
+  header: [
+    { title: "LABOURER NAME" },
+    { title: "MOBILE NO" },
+    { title: "AADHAR NO" },
+    { title: "ADDRESS" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "mobile_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "aadhar_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "address",type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
 export const EditConfig = {
   Driver: {
     header : UpdateDriver.header,
     fields: UpdateDriver.body,
     detailApi: "DriverDetails",
     updateApi: "UpdateDriver",
-    backUrl: "/admin-action/drivers",
+    backUrl: "/admin-action/driver",
   },
 
   Vehicle: {
@@ -232,7 +405,7 @@ export const EditConfig = {
     fields: UpdateVehicle.body,
     detailApi: "VehicleDetails",
     updateApi: "UpdateVehicle",
-    backUrl: "/admin-action/vehicles",
+    backUrl: "/admin-action/vehicle",
   },
 
   Customer: {
@@ -257,6 +430,38 @@ export const EditConfig = {
     detailApi: "ItemDetails",
     updateApi: "UpdateItem",
     backUrl: "/admin-action/Item",
+  },
+
+  Plot: {
+    header : UpdatePlot.header,
+    fields: UpdatePlot.body,
+    detailApi: "PlotDetails",
+    updateApi: "UpdatePlot",
+    backUrl: "/admin-action/Plot",
+  },
+
+  Partner: {
+    header : UpdatePartner.header,
+    fields: UpdatePartner.body,
+    detailApi: "PartnerDetails",
+    updateApi: "UpdatePartner",
+    backUrl: "/admin-action/Partner",
+  },
+
+  Transporter: {
+    header : UpdateTransporter.header,
+    fields: UpdateTransporter.body,
+    detailApi: "TransporterDetails",
+    updateApi: "UpdateTransporter",
+    backUrl: "/admin-action/Transporter",
+  },
+
+  Labourer: {
+    header : UpdateLabourer.header,
+    fields: UpdateLabourer.body,
+    detailApi: "LabourerDetails",
+    updateApi: "UpdateLabourer",
+    backUrl: "/admin-action/Labourer",
   },
 };
 
@@ -289,11 +494,32 @@ export const DeleteConfig = {
     api: "DeleteItem",
     idField: "item_id",
   },
+
+  Plot: {
+    api: "DeletePlot",
+    idField: "plot_id",
+  },
+
+  Partner: {
+    api: "DeletePartner",
+    idField: "partner_id",
+  },
+
+  Transporter: {
+    api: "DeleteTransporter",
+    idField: "transporter_id",
+  },
+
+  Labourer: {
+    api: "DeleteLabourer",
+    idField: "labourer_id",
+  },
 };
 
 //-------------------------------------------
   //-------- ADMIN SERVICE ADD ------- //
 //------------------------------------------
+
 export const DriverADD = {
   Header_Title: "DRIVER ADD",
   Submit_Button: "SUBMIT DETAILS",
@@ -389,7 +615,84 @@ export const ItemADD = {
   ],
 }
 
+export const PlotADD = {
+  Header_Title: "PLOT ADD",
+  Submit_Button: "SUBMIT DETAILS",
+  header: [
+    { title: "PLOT NO" },
+    { title: "PLOT NAME" },
+    { title: "ADDRESS" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "plot_number",type : "text" },
+    { key: "plot_name", type : "text"},
+    { key: "address",type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const PartnerADD = {
+  Header_Title: "PARTNER ADD",
+  Submit_Button: "SUBMIT DETAILS",
+  header: [
+    { title: "PARTNER NAME" },
+    { title: "MOBILE NO" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", type : "text" },
+    { key: "mobile_no",type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const TransporterADD = {
+  Header_Title : "TRANSPORTER ADD",
+  Submit_Button: "SUBMIT DETAILS",
+  header: [
+    { title: "TRANSPORTER NAME" },
+    { title: "MOBILE NO" },
+    { title: "EMAIL" },
+    { title: "COMPANY NAME" },
+    { title: "BANK NAME"},
+    { title: "ACCOUNT NO"},
+    { title: "IFSC CODE"},
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "mobile_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "email", type : "text"},
+    { key: "company_name",type : "text"},
+    { key: "bank_name" ,type : "text"},
+    { key: "account_no" ,isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "ifsc_code" ,type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
+export const LabourerADD = {
+  Header_Title : "LABOURER ADD",
+  Submit_Button: "SUBMIT DETAILS",
+  header: [
+    { title: "LABOURER NAME" },
+    { title: "MOBILE NO" },
+    { title: "AADHAR NO" },
+    { title: "ADDRESS" },
+    { title: "IS ACTIVE" },
+  ],
+  body: [
+    { key: "name", isSearchable: true, filterKey: "search" ,type : "text" },
+    { key: "mobile_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "aadhar_no", isSearchable: true, filterKey: "search" ,type : "text"},
+    { key: "address",type : "text"},
+    { key: "is_active" ,type : "Boolean" },
+  ],
+}
+
 export const ADDConfig = {
+
   Driver: {
     header: DriverADD.header,
     fields: DriverADD.body,
@@ -398,7 +701,7 @@ export const ADDConfig = {
 
     AddApi: "AddDriver",
 
-    backUrl: "/admin-action/drivers",
+    backUrl: "/admin-action/Driver",
   },
 
   Vehicle:{
@@ -409,7 +712,7 @@ export const ADDConfig = {
 
     AddApi:"AddVehicle",
 
-    backUrl: "/admin-action/vehicles",
+    backUrl: "/admin-action/Vehicle",
   },
 
   Customer :{
@@ -420,7 +723,7 @@ export const ADDConfig = {
 
     AddApi:"AddCustomer",
 
-    backUrl: "/admin-action/customer"
+    backUrl: "/admin-action/Customer"
   },
 
   Supplier :{
@@ -431,7 +734,7 @@ export const ADDConfig = {
 
     AddApi:"AddSupplier",
 
-    backUrl: "/admin-action/supplier"
+    backUrl: "/admin-action/Supplier"
   },
 
   Item :{
@@ -442,10 +745,56 @@ export const ADDConfig = {
 
     AddApi:"AddItem",
 
-    backUrl: "/admin-action/item"
-  }
+    backUrl: "/admin-action/Item"
+  },
 
+  Plot :{
+    header: PlotADD.header,
+    fields: PlotADD.body,
+    Header_Title:PlotADD.Header_Title,
+    Submit_Button: PlotADD.Submit_Button,
+
+    AddApi:"AddPlot",
+
+    backUrl: "/admin-action/Plot"
+  },
+
+  Partner :{
+    header: PartnerADD.header,
+    fields: PartnerADD.body,
+    Header_Title: PartnerADD.Header_Title,
+    Submit_Button: PartnerADD.Submit_Button,
+
+    AddApi:"AddPartner",
+
+    backUrl: "/admin-action/Partner"
+  },
+
+  Transporter :{
+    header: TransporterADD.header,
+    fields: TransporterADD.body,
+    Header_Title: TransporterADD.Header_Title,
+    Submit_Button: TransporterADD.Submit_Button,
+
+    AddApi:"AddTransporter",
+
+    backUrl: "/admin-action/Transporter"
+  },
+
+  Labourer :{
+    header: LabourerADD.header,
+    fields: LabourerADD.body,
+    Header_Title: LabourerADD.Header_Title,
+    Submit_Button: LabourerADD.Submit_Button,
+
+    AddApi:"AddLabourer",
+
+    backUrl: "/admin-action/Labourer"
+  },
 };
+
+
+
 export const PAGE_SIZES = [3, 15, 20, 50, 100];
 
 

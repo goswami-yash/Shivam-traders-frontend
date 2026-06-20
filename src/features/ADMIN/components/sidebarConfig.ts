@@ -20,13 +20,13 @@ export const sidebarMenus = [
     items: [
       {
         name: "Drivers",
-        path: "/admin-action/drivers",
-        icon: Truck,
+        path: "/admin-action/driver",
+        icon: UserRound,
       },
       {
         name: "Vehicles",
-        path: "/admin-action/vehicles",
-        icon: Car,
+        path: "/admin-action/vehicle",
+        icon: Truck,
       },
       {
         name: "Customer",
@@ -45,22 +45,22 @@ export const sidebarMenus = [
       },
       {
         name: "Plots",
-        path: "/admin-action/plots",
+        path: "/admin-action/plot",
         icon: Map,
       },
       {
         name: "Partners",
-        path: "/admin-action/partners",
+        path: "/admin-action/partner",
         icon: Handshake,
       },
       {
         name: "Transporters",
-        path: "/admin-action/transporters",
+        path: "/admin-action/transporter",
         icon: Bus,
       },
       {
         name: "Labours",
-        path: "/admin-action/labours",
+        path: "/admin-action/labourer",
         icon: HardHat,
       },
     ],

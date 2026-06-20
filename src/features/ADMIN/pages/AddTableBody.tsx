@@ -6,8 +6,11 @@ import {
     DriverADD,
     VehicleADD,
     SupplierADD,
-    ItemADD
-
+    ItemADD,
+    PlotADD,
+    PartnerADD,
+    TransporterADD,
+    LabourerADD,
 
 } from "@/shared/constants/adminTables";
 
@@ -17,8 +20,12 @@ const addConfigs: Record<string, any> = {
     Driver: DriverADD,
     Vehicle: VehicleADD,
     Customer: CustomerADD,
-    Supplier : SupplierADD,
-    Item : ItemADD
+    Supplier: SupplierADD,
+    Item: ItemADD,
+    Plot: PlotADD,
+    Partner: PartnerADD,
+    Transporter :TransporterADD,
+    Labourer : LabourerADD
 };
 
 export default function AddTableBody() {
@@ -62,12 +69,12 @@ export default function AddTableBody() {
     const inputClass = " w-full h-12 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all";
 
     if (!config) {
-        return (<div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950"> <div className="text-xl font-semibold text-slate-700 dark:text-slate-300">
+        return (<div className="h-full flex items-center justify-center bg-slate-50 dark:bg-slate-950"> <div className="text-xl font-semibold text-slate-700 dark:text-slate-300">
             Configuration Not Found </div> </div>
         );
     }
 
-    return (<div className="min-h-screen bg-slate-50 dark:bg-slate-950 p-6">
+    return (<div className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-lg p-6">
         {/* Header */} <div className="flex items-center gap-4 mb-8">
             <button
                 onClick={() => navigate(-1)}

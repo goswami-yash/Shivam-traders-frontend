@@ -620,9 +620,9 @@ export default function CreateOrder() {
 
       <form onSubmit={handleSubmit} className="space-y-8 pb-20">
         {/* SECTION: TRIP & TRANSPORT & VEHICLE */}
-        <div className="form-card  bg-white dark:bg-slate-900 text-slate-900 dark:text-white tracking-tight">
+        <div className="form-card ">
 
-          <div className="section-title  bg-white dark:bg-slate-900 text-slate-900 dark:text-white tracking-tight">વાહન અને પરિવહન વિગતો</div>
+          <div className="section-title ">વાહન અને પરિવહન વિગતો</div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6  bg-white dark:bg-slate-900 text-slate-900 dark:text-white tracking-tight">
 
@@ -883,7 +883,7 @@ export default function CreateOrder() {
                 />
 
                 {selectedFile ? (
-                  <span className="text-sm font-bold text-blue-700 flex items-center justify-center gap-2 truncate">
+                  <span className="text-sm font-bold text-blue-700 flex items-center justify-center gap-2 truncate ">
                     <svg
                       className="w-5 h-5 shrink-0"
                       fill="none"
@@ -900,7 +900,7 @@ export default function CreateOrder() {
                     {selectedFile.name}
                   </span>
                 ) : (
-                  <span className="text-lg font-semibold text-slate-500">
+                  <span className="text-lg font-semibold text-slate-500 ">
                     ફોટો પસંદ કરવા માટે ટેપ કરો
                   </span>
                 )}
@@ -1023,7 +1023,7 @@ export default function CreateOrder() {
 
           <div className="space-y-4">
             {form.labour.length === 0 && (
-              <p className="text-lg text-slate-600 font-medium py-2 text-center bg-slate-50 rounded-xl p-4 border border-dashed border-slate-200">
+              <p className="text-lg text-slate-600 font-medium py-2 text-center rounded-xl p-4 border border-dashed border-slate-200  bg-white dark:bg-slate-600  dark:text-white">
                 કોઈ મજૂર ઉમેરાયો નથી.
               </p>
             )}
@@ -1192,8 +1192,8 @@ export default function CreateOrder() {
 
           <div className="space-y-6">
             {form.purchase.length === 0 ? (
-              <div className="border border-dashed border-slate-300 rounded-2xl p-8 text-center bg-slate-50">
-                <p className="text-slate-500 font-medium text-lg">
+              <div className="border border-dashed border-slate-300 rounded-2xl p-8 text-center  dark:bg-slate-600 text-slate-900 dark:text-white">
+                <p className="text-slate-500 font-medium text-lg  bg-white dark:bg-slate-600 text-slate600 dark:text-white">
                   કોઈ વેચનાર ઉમેરાયો નથી.
                 </p>
               </div>
@@ -1201,7 +1201,7 @@ export default function CreateOrder() {
               form.purchase.map((d: any, i: number) => (
                 <div
                   key={i}
-                  className="relative border border-slate-200 rounded-2xl p-5 bg-white shadow-sm"
+                  className="relative border border-slate-200 rounded-2xl p-5 shadow-sm bg-white dark:bg-slate-500 text-slate-900 dark:text-white "
                 >
                   {/* DELETE BUTTON */}
                   <button
@@ -1225,7 +1225,7 @@ export default function CreateOrder() {
                   </button>
 
                   {/* TOP GRID */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 ">
 
                     {/* Supplier */}
                     <div>

@@ -89,7 +89,7 @@ const TableBody = ({ tableConfig, data, type, refreshData, setPagination, pagina
             <div className="relative">
               <Search
                 size={18}
-                className="absolute left-3 top-3 text-gray-400"
+                className="absolute left-3 top-3 text-gray-400 "
               />
 
               <input
@@ -107,7 +107,8 @@ const TableBody = ({ tableConfig, data, type, refreshData, setPagination, pagina
                   }));
                 }}
                 placeholder="Search..."
-                className="pl-10 pr-4 py-2 border rounded-lg"
+                className="pl-10 pr-4 py-2 border rounded-lg bg-white dark:bg-slate-900
+             text-gray-900 dark:text-white"
               />
             </div>
           )}

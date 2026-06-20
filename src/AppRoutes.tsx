@@ -15,6 +15,10 @@ import AddTableBody from "./features/ADMIN/pages/AddTableBody";
 import CustomerPage from "./features/ADMIN/components/Customer";
 import SupplierPage from "./features/ADMIN/components/Supplier";
 import  ItemPage  from "./features/ADMIN/components/Item";
+import PlotPage from "./features/ADMIN/components/Plot";
+import PartnerPage from "./features/ADMIN/components/Partner";
+import LabourerPage from "./features/ADMIN/components/Labourer";
+import TransporterPage from "./features/ADMIN/components/Transporter";
 
 
 function AppRoutes() {
@@ -38,11 +42,15 @@ function AppRoutes() {
             <Route path="/user-manage" element={<UserManagementPage />} />
 
             <Route path="/admin-action" element={<AdminPage />}>
-              <Route path="drivers" element={<Drivers />} />
-              <Route path="vehicles" element={<Vehicles />} />
+              <Route path="driver" element={<Drivers />} />
+              <Route path="vehicle" element={<Vehicles />} />
               <Route path="Customer" element={<CustomerPage />} />
               <Route path="Supplier" element={<SupplierPage />} />
               <Route path="Item" element={<ItemPage />} />
+              <Route path="Plot" element={<PlotPage />} />
+              <Route path="Partner" element={<PartnerPage />} />
+              <Route path="Labourer" element={<LabourerPage />} />
+              <Route path="Transporter" element={<TransporterPage />} />
               <Route path=":type/create" element={<AddTableBody />} />
 
             </Route>

@@ -55,6 +55,38 @@ export const getAdminList = async (
       } catch (error: any) {
         throw error.response?.data || error.message;
       }
+
+    case "PlotList":
+      try {
+        const response = await axios.post(API_ENDPOINTS.adminAction.getPlotList, payload);
+        return response.data;
+      } catch (error: any) {
+        throw error.response?.data || error.message;
+      }
+
+    case "PartnerList":
+      try {
+        const response = await axios.post(API_ENDPOINTS.adminAction.getPartnerList, payload);
+        return response.data;
+      } catch (error: any) {
+        throw error.response?.data || error.message;
+      }
+
+    case "TransporterList":
+      try {
+        const response = await axios.post(API_ENDPOINTS.adminAction.getTransporterList, payload);
+        return response.data;
+      } catch (error: any) {
+        throw error.response?.data || error.message;
+      }
+
+    case "LabourerList":
+      try {
+        const response = await axios.post(API_ENDPOINTS.adminAction.getLabourerList, payload);
+        return response.data;
+      } catch (error: any) {
+        throw error.response?.data || error.message;
+      }
   }
 }
 
@@ -91,6 +123,30 @@ export const updateAdminService = async (
     case "UpdateItem":
       return axios.post(
         API_ENDPOINTS.adminAction.UpdateItem,
+        payload
+      );
+
+    case "UpdatePlot":
+      return axios.post(
+        API_ENDPOINTS.adminAction.UpdatePlot,
+        payload
+      );
+
+    case "UpdatePartner":
+      return axios.post(
+        API_ENDPOINTS.adminAction.UpdatePartner,
+        payload
+      );
+
+    case "UpdateTransporter":
+      return axios.post(
+        API_ENDPOINTS.adminAction.UpdateTransporter,
+        payload
+      );
+
+    case "UpdateLabourer":
+      return axios.post(
+        API_ENDPOINTS.adminAction.UpdateLabourer,
         payload
       );
   }
@@ -130,6 +186,30 @@ export const getAdminDetails = async (
         API_ENDPOINTS.adminAction.getItemById,
         { item_id: id }
       );
+
+    case "PlotDetails":
+      return axios.post(
+        API_ENDPOINTS.adminAction.getPlotById,
+        { plot_id: id }
+      );
+
+    case "PartnerDetails":
+      return axios.post(
+        API_ENDPOINTS.adminAction.getPartnerById,
+        { partner_id: id }
+      );
+
+    case "TransporterDetails":
+      return axios.post(
+        API_ENDPOINTS.adminAction.getTransporterById,
+        { transporter_id: id }
+      );
+
+      case "LabourerDetails":
+        return axios.post(
+          API_ENDPOINTS.adminAction.getLabourerById,
+          { labourer_id: id }
+        );
   }
 };
 
@@ -165,9 +245,33 @@ export const deleteAdminService = async (
     case "DeleteItem":
       return axios.post(
         API_ENDPOINTS.adminAction.DeleteItem,
-        { supplier_id: id }
+        { item_id: id }
       );
 
+    case "DeletePlot":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeletePlot,
+        { plot_id: id }
+      );
+
+    case "DeletePartner":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeletePartner,
+        { partner_id: id }
+      );
+
+      case "DeleteTransporter":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeleteTransporter,
+        { transporter_id: id }
+      );
+
+
+      case "DeleteLabourer":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeleteLabourer,
+        { labourer_id: id }
+      );
     default:
       throw new Error("Invalid Delete Type");
   }
