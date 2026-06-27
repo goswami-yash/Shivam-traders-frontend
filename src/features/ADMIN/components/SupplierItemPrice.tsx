@@ -4,7 +4,7 @@ import { getAdminList } from "../services/adminServices";
 import { useEffect, useState } from "react";
 
 
-export default function PlotPage() {
+export default function SupplierItemPricePage() {
 
   const [data, setData] = useState("");
   const [pagination, setPagination] = useState({
@@ -19,12 +19,12 @@ export default function PlotPage() {
 
   useEffect(() => {
     
-    getPlotList();
+    getSupplierItemPriceList();
   }, [pagination.currentPage, pagination.pageSize, filters.search]);
 
-  const getPlotList = async () => {
+  const getSupplierItemPriceList = async () => {
     try {
-      const data = await getAdminList("PlotList", pagination.currentPage, pagination.pageSize,filters);
+      const data = await getAdminList("SupplierItemPriceList", pagination.currentPage, pagination.pageSize,filters);
       setData(data.result || []);
 
       setPagination((prev) => ({
@@ -39,10 +39,10 @@ export default function PlotPage() {
   return (
 
     <TableBody
-      tableConfig={TableContent.PlotList}
+      tableConfig={TableContent.SupplierItemPriceList}
       data={data}
-      type='Plot'
-      refreshData={getPlotList}
+      type='SupplierItemPrice'
+      refreshData={getSupplierItemPriceList}
       setPagination={setPagination}
       pagination={pagination}
       filters={filters}

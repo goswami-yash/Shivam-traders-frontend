@@ -70,11 +70,6 @@ export const sidebarMenus = [
     title: "Assignments",
     items: [
       {
-        name: "Vehicle Assignment",
-        path: "/admin-action/vehicle-assignments",
-        icon: Link,
-      },
-      {
         name: "Customer Address",
         path: "/admin-action/customer-addresses",
         icon: MapPinned,
@@ -106,7 +101,7 @@ export const sidebarMenus = [
       },
       {
         name: "Labour Plot Assignment",
-        path: "/admin-action/labour-plot-assignments",
+        path: "/admin-action/labour-plot-assign",
         icon: Link,
       },
     ],

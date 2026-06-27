@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { Delete, Edit, Plus, Search } from "lucide-react";
 import { Pagination } from "@/shared/components/ui/Pagination";
 import { useNavigate } from "react-router-dom";
-import { deleteAdminService } from "../services/adminServuces";
+import { deleteAdminService } from "../services/adminServices";
 import UpdateTableBody from "../pages/UpdateTableBody";
 
 const TableBody = ({ tableConfig, data, type, refreshData, setPagination, pagination, filters, setFilters }: { tableConfig: any; data: any; type: string, refreshData: any, setPagination: any, pagination: any, filters: any, setFilters: any }) => {
@@ -92,6 +92,7 @@ const TableBody = ({ tableConfig, data, type, refreshData, setPagination, pagina
                 className="absolute left-3 top-3 text-gray-400 "
               />
 
+
               <input
                 type="text"
                 value={filters[searchFilterKey] || ""}
@@ -159,7 +160,9 @@ const TableBody = ({ tableConfig, data, type, refreshData, setPagination, pagina
              bg-white dark:bg-slate-900
              text-gray-900 dark:text-white"
                         >
-                          {String(row[field.key] ?? "-")}
+                          {field.type === "date"
+                            ? new Date(row[field.key]).toLocaleDateString("en-GB")
+                            : String(row[field.key] ?? "-")}
                         </td>
                       ))}
                       <td className="px-4 py-3">

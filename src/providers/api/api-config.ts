@@ -32,7 +32,7 @@ export const API_ENDPOINTS = {
 
     getVehicleList: '/admin/vehicle/list',
     AddVehicle: '/admin/vehicle/create',
-    UpdateVehicle: '/admin/get/vehicle/update',
+    UpdateVehicle: '/admin/vehicle/update',
     DeleteVehicle: '/admin/vehicle/delete',
     getVehicleById: "/admin/vehicle/details/by_id",
 
@@ -77,12 +77,68 @@ export const API_ENDPOINTS = {
     UpdateTransporter: "/admin/transporter/update",
     DeleteTransporter: "/admin/transporter/delete",
     getTransporterById: "/admin/transporter/details/by_id",
+    getTransporterNameList: "/admin/transporter/name/list",
 
     getLabourerList: "/admin/labourer/list",
     AddLabourer: "/admin/labourer/create",
     UpdateLabourer: "/admin/labourer/update",
     DeleteLabourer: "/admin/labourer/delete",
     getLabourerById: "/admin/labourer/details/by_id",
+
+    getVehicleAssignmentList: "/admin/labourer/list",
+    vehicleAssignmentCreate: "/admin/labourer/list",
+    vehicleAssignmentUpdate: "/admin/labourer/list",
+    vehicleAssignmentDelete: "/admin/labourer/list",
+    getvehicleAssignmentById: "/admin/labourer/details/by_id",
+
+    labourPlotAssignmentList: "/admin/labour-plot-assignment/list",
+    labourPlotAssignmentCreate: "/admin/labour-plot-assignment/create",
+    labourPlotAssignmentUpdate: "/admin/labour-plot-assignment/update",
+    labourPlotAssignmentDelete: "/admin/labour-plot-assignment/delete",
+    labourPlotAssignmentById: "/admin/labour-plot-assignment/details",
+
+    getCustomerAddressList: '/admin/customer/address/list',
+    AddCustomerAddress: '/admin/customer/address/create',
+    UpdateCustomerAddress: '/admin/customer/address/update',
+    DeleteCustomerAddress: '/admin/customer/address/delete',
+    getCustomerAddressById: "/admin/customer/address/details/by_id",
+
+    getCustomerPaymentList: '/admin/customer/payment/list',
+    AddCustomerPayment: '/admin/customer/payment/create',
+    UpdateCustomerPayment: '/admin/customer/payment/update',
+    DeleteCustomerPayment: '/admin/customer/payment/delete',
+    getCustomerPaymentById: "/admin/customer/payment/details/by_id",
+
+    getCustomerItemPriceList: '/admin/customer/item/price/list',
+    AddCustomerItemPrice: '/admin/customer/item/price/create',
+    UpdateCustomerItemPrice: '/admin/customer/item/price/update',
+    DeleteCustomerItemPrice: '/admin/customer/item/price/delete',
+    getCustomerItemPriceById: "/admin/customer/item/price/details/by_id",
+
+    getLabourerAssignPlotList: '/admin/labourer/assign/plot/list',
+    AddLabourerAssignPlot: '/admin/labourer/assign/plot/create',
+    UpdateLabourerAssignPlot: '/admin/labourer/assign/plot/update',
+    DeleteLabourerAssignPlot: '/admin/labourer/assign/plot/delete',
+    getLabourerAssignPlotById: "/admin/labourer/assign/plot/details/by_id",
+
+    getSupplierAddressList: '/admin/supplier/address/list',
+    AddSupplierAddress: '/admin/supplier/address/create',
+    UpdateSupplierAddress: '/admin/supplier/address/update',
+    DeleteSupplierAddress: '/admin/supplier/address/delete',
+    getSupplierAddressById: '/admin/supplier/address/details/by_id',
+
+    getSupplierPaymentList: '/admin/supplier/payment/list',
+    AddSupplierPayment: '/admin/supplier/payment/create',
+    UpdateSupplierPayment: '/admin/supplier/payment/update',
+    DeleteSupplierPayment: '/admin/supplier/payment/delete',
+    getSupplierPaymentById: '/admin/supplier/payment/details/by_id',
+
+    getSupplierItemPriceList: '/admin/supplier/item/price/list',
+    AddSupplierItemPrice: '/admin/supplier/item/price/create',
+    UpdateSupplierItemPrice: '/admin/supplier/item/price/update',
+    DeleteSupplierItemPrice: '/admin/supplier/item/price/delete',
+    getSupplierItemPriceById: '/admin/supplier/item/price/details/by_id',
+
   }
 
 };

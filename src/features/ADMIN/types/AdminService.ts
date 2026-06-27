@@ -15,3 +15,34 @@ export interface UpdateDrivers{
     address : string,
     is_active : boolean
 }
+
+export interface TableColumn {
+    key: string;
+    label: string;
+  }
+  
+  export interface FormField {
+    name: string;
+    label: string;
+    type:
+      | "text"
+      | "number"
+      | "date"
+      | "dropdown"
+      | "checkbox";
+    options?: {
+      label: string;
+      value: string | number;
+    }[];
+  }
+  
+  export interface RelationshipConfig {
+    title: string;
+    listApi: string;
+    createApi: string;
+    updateApi: string;
+    deleteApi: string;
+  
+    columns: TableColumn[];
+    fields: FormField[];
+  }

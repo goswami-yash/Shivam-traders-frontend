@@ -4,7 +4,7 @@ import { getAdminList } from "../services/adminServices";
 import { useEffect, useState } from "react";
 
 
-export default function PlotPage() {
+export default function CustomerPaymentPage() {
 
   const [data, setData] = useState("");
   const [pagination, setPagination] = useState({
@@ -19,12 +19,12 @@ export default function PlotPage() {
 
   useEffect(() => {
     
-    getPlotList();
+    getCustomerPaymentList();
   }, [pagination.currentPage, pagination.pageSize, filters.search]);
 
-  const getPlotList = async () => {
+  const getCustomerPaymentList = async () => {
     try {
-      const data = await getAdminList("PlotList", pagination.currentPage, pagination.pageSize,filters);
+      const data = await getAdminList("CustomerPaymentList", pagination.currentPage, pagination.pageSize,filters);
       setData(data.result || []);
 
       setPagination((prev) => ({
@@ -39,10 +39,10 @@ export default function PlotPage() {
   return (
 
     <TableBody
-      tableConfig={TableContent.PlotList}
+      tableConfig={TableContent.CustomerPaymentList}
       data={data}
-      type='Plot'
-      refreshData={getPlotList}
+      type='CustomerPayment'
+      refreshData={getCustomerPaymentList}
       setPagination={setPagination}
       pagination={pagination}
       filters={filters}

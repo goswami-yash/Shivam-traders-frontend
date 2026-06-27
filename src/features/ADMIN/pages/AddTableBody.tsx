@@ -1,5 +1,6 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import Select from "react-select";
 
 import {
     CustomerADD,
@@ -11,10 +12,17 @@ import {
     PartnerADD,
     TransporterADD,
     LabourerADD,
+    CustomerAddressADD,
+    CustomerPaymentADD,
+    CustomerItemPriceADD,
+    LabourerAssignPlotADD,
+    SupplierAddressADD,
+    SupplierPaymentADD,
+    SupplierItemPriceADD,
 
 } from "@/shared/constants/adminTables";
 
-import { addAdminService } from "../services/adminServuces";
+import { addAdminService, getAdminList } from "../services/adminServices";
 
 const addConfigs: Record<string, any> = {
     Driver: DriverADD,
@@ -24,18 +32,59 @@ const addConfigs: Record<string, any> = {
     Item: ItemADD,
     Plot: PlotADD,
     Partner: PartnerADD,
-    Transporter :TransporterADD,
-    Labourer : LabourerADD
+    Transporter: TransporterADD,
+    Labourer: LabourerADD,
+    CustomerAddress: CustomerAddressADD,
+    CustomerPayment: CustomerPaymentADD,
+    CustomerItemPrice: CustomerItemPriceADD,
+    LabourerAssignPlot :LabourerAssignPlotADD,
+    SupplierAddress: SupplierAddressADD,
+    SupplierPayment: SupplierPaymentADD,
+    SupplierItemPrice: SupplierItemPriceADD,
 };
 
 export default function AddTableBody() {
     const navigate = useNavigate();
     const { type } = useParams();
-
+    const [dropdowns, setDropdowns] = useState<any>({});
+    console.log("type =", type);
     const config = useMemo(
         () => addConfigs[type as string],
         [type]
     );
+    console.log("config =", config);
+    useEffect(() => {
+        if (config) {
+            loadDropdowns();
+        }
+    }, [config]);
+
+
+    const loadDropdowns = async () => {
+        try {
+            const dropdownData: any = {};
+
+            for (const field of config.body) {
+                if (field.type === "select") {
+                    const response = await getAdminList(
+                        field.api,
+                        1,
+                        1000,
+                        {}
+                    );
+
+                    dropdownData[field.key] =
+                        response.result || [];
+                }
+            }
+
+            setDropdowns(dropdownData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    const isDark =
+        document.documentElement.classList.contains("dark");
 
     const [formData, setFormData] = useState<any>({});
 
@@ -69,7 +118,7 @@ export default function AddTableBody() {
     const inputClass = " w-full h-12 px-4 rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder:text-slate-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all";
 
     if (!config) {
-        return (<div className="h-full flex items-center justify-center bg-slate-50 dark:bg-slate-950"> <div className="text-xl font-semibold text-slate-700 dark:text-slate-300">
+        return (<div className="h-full flex items-center justify-center "> <div className="text-xl font-semibold text-slate-700 dark:text-slate-300">
             Configuration Not Found </div> </div>
         );
     }
@@ -92,12 +141,12 @@ export default function AddTableBody() {
             className=" bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-3xl shadow-lg p-8"
         >
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-                {config.body.map((field: any) => (
+                {config.body.map((field: any, index: number) => (
                     <div key={field.key}>
                         <label
                             className=" block mb-2 text-sm font-semibold text-slate-700 dark:text-slate-300 capitalize "
                         >
-                            {field.key.replaceAll("_", " ")}
+                            {config.header?.[index]?.title || field.key}
                         </label>
 
                         {/* Text */}
@@ -113,6 +162,149 @@ export default function AddTableBody() {
                                 }
                                 className={inputClass}
                             />
+                        )}
+
+                        {/*select */}
+
+                        {field.type === "select" && (
+                            <Select
+                                options={dropdowns[field.key]?.map((item: any) => ({
+                                    value: item[field.valueKey],
+                                    label: item[field.labelKey],
+                                }))}
+
+                                value={
+                                    dropdowns[field.key]
+                                        ?.map((item: any) => ({
+                                            value: item[field.valueKey],
+                                            label: item[field.labelKey],
+                                        }))
+                                        .find(
+                                            (x: any) =>
+                                                x.value === formData[field.key]
+                                        ) || null
+                                }
+
+                                onChange={(option: any) =>
+                                    handleChange(
+                                        field.key,
+                                        option?.value
+                                    )
+                                }
+
+                                maxMenuHeight={180}
+                                menuPlacement="auto"
+                                isClearable
+
+                                styles={{
+                                    control: (base) => ({
+                                        ...base,
+                                        minHeight: 48,
+                                        backgroundColor: isDark
+                                            ? "#1e293b"
+                                            : "#ffffff",
+                                        borderColor: isDark
+                                            ? "#475569"
+                                            : "#cbd5e1",
+                                        color: isDark
+                                            ? "#ffffff"
+                                            : "#111827",
+                                    }),
+
+                                    menu: (base) => ({
+                                        ...base,
+                                        backgroundColor: isDark
+                                            ? "#1e293b"
+                                            : "#ffffff",
+                                        zIndex: 9999,
+                                    }),
+
+                                    menuList: (base) => ({
+                                        ...base,
+                                        maxHeight: 180,
+                                    }),
+
+                                    option: (base, state) => ({
+                                        ...base,
+                                        backgroundColor: state.isFocused
+                                            ? isDark
+                                                ? "#334155"
+                                                : "#f1f5f9"
+                                            : isDark
+                                                ? "#1e293b"
+                                                : "#ffffff",
+
+                                        color: isDark
+                                            ? "#ffffff"
+                                            : "#111827",
+
+                                        cursor: "pointer",
+                                    }),
+
+                                    singleValue: (base) => ({
+                                        ...base,
+                                        color: isDark
+                                            ? "#ffffff"
+                                            : "#111827",
+                                    }),
+
+                                    input: (base) => ({
+                                        ...base,
+                                        color: isDark
+                                            ? "#ffffff"
+                                            : "#111827",
+                                    }),
+
+                                    placeholder: (base) => ({
+                                        ...base,
+                                        color: isDark
+                                            ? "#94a3b8"
+                                            : "#64748b",
+                                    }),
+                                }}
+                            />
+                        )}
+
+                        {/* date */}
+                        {field.type === "date" && (
+                            <input
+                                type="date"
+                                value={formData[field.key] || ""}
+                                onChange={(e) =>
+                                    handleChange(
+                                        field.key,
+                                        e.target.value
+                                    )
+                                }
+                                className={inputClass}
+                            />
+                        )}
+
+                        {/* selectStatic */}
+                        {field.type === "selectStatic" && (
+                            <select
+                                value={formData[field.key] ?? ""}
+                                onChange={(e) =>
+                                    handleChange(
+                                        field.key,
+                                        e.target.value
+                                    )
+                                }
+                                className={inputClass}
+                            >
+                                <option value="">
+                                    Select {field.key}
+                                </option>
+
+                                {field.options?.map((option: any) => (
+                                    <option
+                                        key={option.value}
+                                        value={option.value}
+                                    >
+                                        {option.label}
+                                    </option>
+                                ))}
+                            </select>
                         )}
 
                         {/* Number */}
@@ -146,7 +338,7 @@ export default function AddTableBody() {
                                         className="sr-only peer"
                                     />
                                     <div
-                                        className=" relative w-11 h-6 bg-red-500 rounded-full transition-colors peer-checked:bg-green-50 after:content-[''] after:flex after:items-center after:justify-center after:text-[10px] after:text-red-500 after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-al peer-checked:after:translate-x-5 peer-checked:after:content-[''] peer-checked:after:text-green-500"
+                                        className=" relative w-11 h-6 bg-red-500 rounded-full transition-colors peer-checked:bg-green-500 after:content-[''] after:flex after:items-center after:justify-center after:text-[10px] after:text-red-500 after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-al peer-checked:after:translate-x-5 peer-checked:after:content-[''] peer-checked:after:text-green-500"
                                     ></div>
 
                                     <span

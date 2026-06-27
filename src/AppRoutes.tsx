@@ -19,6 +19,13 @@ import PlotPage from "./features/ADMIN/components/Plot";
 import PartnerPage from "./features/ADMIN/components/Partner";
 import LabourerPage from "./features/ADMIN/components/Labourer";
 import TransporterPage from "./features/ADMIN/components/Transporter";
+import CustomerAddressPage from "./features/ADMIN/components/CustomerAddress";
+import CustomerPaymentPage from "./features/ADMIN/components/CustomerPayment";
+import CustomerItemPricePage from "./features/ADMIN/components/CustomerItemPrice";
+import LabourerAssignPlotPage from "./features/ADMIN/components/LabourerAssignPlot";
+import SupplierAddressPage from "./features/ADMIN/components/SupplierAddress";
+import SupplierPaymentPage from "./features/ADMIN/components/SupplierPayment";
+import SupplierItemPricePage from "./features/ADMIN/components/SupplierItemPrice";
 
 
 function AppRoutes() {
@@ -51,6 +58,13 @@ function AppRoutes() {
               <Route path="Partner" element={<PartnerPage />} />
               <Route path="Labourer" element={<LabourerPage />} />
               <Route path="Transporter" element={<TransporterPage />} />
+              <Route path="Customer-Addresses" element={<CustomerAddressPage />} />
+              <Route path="Customer-payments" element={<CustomerPaymentPage />} />
+              <Route path="Customer-item-prices" element={<CustomerItemPricePage />} />
+              <Route path="Labour-plot-assign" element={<LabourerAssignPlotPage />} />
+              <Route path="Supplier-Addresses" element={<SupplierAddressPage />} />
+              <Route path="Supplier-payments" element={<SupplierPaymentPage />} />
+              <Route path="Supplier-item-prices" element={<SupplierItemPricePage />} />
               <Route path=":type/create" element={<AddTableBody />} />
 
             </Route>

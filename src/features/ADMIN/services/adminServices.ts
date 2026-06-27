@@ -2,7 +2,6 @@ import axios from "@/providers/axios/axiosInstance";
 import { API_ENDPOINTS } from "@/providers/api/api-config";
 import { cleanObject } from "@/shared/utils/cleanObject";
 
-
 export const getAdminList = async (
   key: string,
   pagenumber: number,
@@ -87,6 +86,72 @@ export const getAdminList = async (
       } catch (error: any) {
         throw error.response?.data || error.message;
       }
+
+    case "OwnerList":
+      try {
+        const response = await axios.get(API_ENDPOINTS.adminAction.getTransporterNameList);
+
+        return response.data;
+
+      } catch (error: any) {
+        throw (error.response?.data || error.message);
+      }
+
+    case "CustomerAddressList":
+      try {
+        const response = await axios.post(API_ENDPOINTS.adminAction.getCustomerAddressList, payload);
+        return response.data;
+      } catch (error: any) {
+        throw error.response?.data || error.message;
+      }
+
+    case "CustomerPaymentList":
+      try {
+        const response = await axios.post(API_ENDPOINTS.adminAction.getCustomerPaymentList, payload);
+        return response.data;
+      } catch (error: any) {
+        throw error.response?.data || error.message;
+      }
+
+    case "CustomerItemPriceList":
+      try {
+        const response = await axios.post(API_ENDPOINTS.adminAction.getCustomerItemPriceList, payload);
+        return response.data;
+      } catch (error: any) {
+        throw error.response?.data || error.message;
+      }
+
+      case "LabourerAssignPlotList":
+        try {
+          const response = await axios.post(API_ENDPOINTS.adminAction.getLabourerAssignPlotList, payload);
+          return response.data;
+        } catch (error: any) {
+          throw error.response?.data || error.message;
+        }
+
+        case "SupplierAddressList":
+          try {
+            const response = await axios.post(API_ENDPOINTS.adminAction.getSupplierAddressList, payload);
+            return response.data;
+          } catch (error: any) {
+            throw error.response?.data || error.message;
+          }
+    
+        case "SupplierPaymentList":
+          try {
+            const response = await axios.post(API_ENDPOINTS.adminAction.getSupplierPaymentList, payload);
+            return response.data;
+          } catch (error: any) {
+            throw error.response?.data || error.message;
+          }
+    
+        case "SupplierItemPriceList":
+          try {
+            const response = await axios.post(API_ENDPOINTS.adminAction.getSupplierItemPriceList, payload);
+            return response.data;
+          } catch (error: any) {
+            throw error.response?.data || error.message;
+          }
   }
 }
 
@@ -149,6 +214,54 @@ export const updateAdminService = async (
         API_ENDPOINTS.adminAction.UpdateLabourer,
         payload
       );
+
+    case "UpdateCustomerAddress":
+      return axios.post(
+        API_ENDPOINTS.adminAction.UpdateCustomerAddress,
+        payload
+      );
+
+    case "UpdateCustomerPayment":
+      return axios.post(
+        API_ENDPOINTS.adminAction.UpdateCustomerPayment,
+        payload
+      );
+
+      case "UpdateCustomerItemPrice":
+        return axios.post(
+          API_ENDPOINTS.adminAction.UpdateCustomerItemPrice,
+          payload
+        );
+
+        case "UpdateLabourerAssignPlot":
+          return axios.post(
+            API_ENDPOINTS.adminAction.UpdateLabourerAssignPlot,
+            payload
+          );
+
+          case "UpdateLabourerAssignPlot":
+            return axios.post(
+              API_ENDPOINTS.adminAction.UpdateLabourerAssignPlot,
+              payload
+            );
+
+            case "UpdateSupplierAddress":
+              return axios.post(
+                API_ENDPOINTS.adminAction.UpdateSupplierAddress,
+                payload
+              );
+        
+            case "UpdateSupplierPayment":
+              return axios.post(
+                API_ENDPOINTS.adminAction.UpdateSupplierPayment,
+                payload
+              );
+        
+              case "UpdateSupplierItemPrice":
+                return axios.post(
+                  API_ENDPOINTS.adminAction.UpdateSupplierItemPrice,
+                  payload
+                );
   }
 };
 
@@ -205,12 +318,56 @@ export const getAdminDetails = async (
         { transporter_id: id }
       );
 
-      case "LabourerDetails":
+    case "LabourerDetails":
+      return axios.post(
+        API_ENDPOINTS.adminAction.getLabourerById,
+        { labourer_id: id }
+      );
+
+    case "CustomerAddressDetails":
+      return axios.post(
+        API_ENDPOINTS.adminAction.getCustomerAddressById,
+        { customer_address_id: id }
+      );
+
+    case "CustomerPaymentDetails":
+      return axios.post(
+        API_ENDPOINTS.adminAction.getCustomerPaymentById,
+        { customer_payment_id: id }
+      );
+
+      case "CustomerItemPriceDetails":
         return axios.post(
-          API_ENDPOINTS.adminAction.getLabourerById,
-          { labourer_id: id }
+          API_ENDPOINTS.adminAction.getCustomerItemPriceById,
+          { item_price_id: id }
         );
+
+        case "LabourerAssignPlotDetails":
+          return axios.post(
+            API_ENDPOINTS.adminAction.getLabourerAssignPlotById,
+            { assign_id: id }
+          );
+
+          case "SupplierAddressDetails":
+      return axios.post(
+        API_ENDPOINTS.adminAction.getSupplierAddressById,
+        { supplier_address_id: id }
+      );
+
+    case "SupplierPaymentDetails":
+      return axios.post(
+        API_ENDPOINTS.adminAction.getSupplierPaymentById,
+        { supplier_payment_id: id }
+      );
+
+      case "SupplierItemPriceDetails":
+        return axios.post(
+          API_ENDPOINTS.adminAction.getSupplierItemPriceById,
+          { item_price_id: id }
+        );
+
   }
+
 };
 
 export const deleteAdminService = async (
@@ -260,18 +417,63 @@ export const deleteAdminService = async (
         { partner_id: id }
       );
 
-      case "DeleteTransporter":
+    case "DeleteTransporter":
       return axios.post(
         API_ENDPOINTS.adminAction.DeleteTransporter,
         { transporter_id: id }
       );
 
 
-      case "DeleteLabourer":
+    case "DeleteLabourer":
       return axios.post(
         API_ENDPOINTS.adminAction.DeleteLabourer,
         { labourer_id: id }
       );
+
+    case "DeleteCustomerAddress":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeleteCustomerAddress,
+        { customer_address_id: id }
+      );
+
+    case "DeleteCustomerPayment":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeleteCustomerPayment,
+        { assign_id: id }
+      );
+
+      case "DeleteCustomerItemPrice":
+        return axios.post(
+          API_ENDPOINTS.adminAction.DeleteCustomerItemPrice,
+          { item_price_id: id }
+        );
+
+
+    case "DeleteLabourerAssignPlot":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeleteLabourerAssignPlot,
+        { assign_id: id }
+      );
+
+
+    case "DeleteSupplierAddress":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeleteSupplierAddress,
+        { supplier_address_id: id }
+      );
+
+    case "DeleteSupplierPayment":
+      return axios.post(
+        API_ENDPOINTS.adminAction.DeleteSupplierPayment,
+        { assign_id: id }
+      );
+
+      case "DeleteSupplierItemPrice":
+        return axios.post(
+          API_ENDPOINTS.adminAction.DeleteSupplierItemPrice,
+          { item_price_id: id }
+        );
+
     default:
       throw new Error("Invalid Delete Type");
   }
@@ -306,3 +508,5 @@ export const addAdminService = async (
     );
   }
 };
+
+

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { TableContent } from "@/shared/constants/adminTables";
 import TableBody from "../pages/tableBody";
-import { getAdminList } from "../services/adminServuces";
+import { getAdminList } from "../services/adminServices";
 
 const Vehicles = () => {
   const [data, setData] = useState<any[]>([]);
