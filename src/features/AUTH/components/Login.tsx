@@ -1,11 +1,14 @@
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-import { login } from "@/features/AUTH/services/AuthService"; // adjust path
+import React, { useState } from "react";
+import { Eye, EyeOff, Lock, Phone, ArrowRight, Loader2 } from "lucide-react";
+import { login } from "@/features/AUTH/services/AuthService";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
+import toast from "react-hot-toast";
+import { motion } from "framer-motion";
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { setIsAuthenticated, setUser } = useAuth();
 
   const [showPass, setShowPass] = useState(false);
   const [form, setForm] = useState({
@@ -15,21 +18,18 @@ export default function LoginPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const { loginUser } = useAuth();
 
-  // Handle input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
+    if (error) setError("");
   };
 
-  // Submit handler
-  const handleSubmit = async (e: React.SubmitEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
 
-    // Basic validation
     if (!form.mobile_no || !form.password) {
-      return setError("Please fill all fields");
+      return setError("Please fill in all required fields.");
     }
 
     try {
@@ -39,145 +39,192 @@ export default function LoginPage() {
         mobile_no: form.mobile_no,
         password: form.password,
       });
-      loginUser(res.result);
-      // Redirect after login
-      navigate("/");
 
+      // Checked for both spelling variations ('success' and 'sucess')
+      if (res?.success || res?.sucess) {
+        const userData = res.result || res.data;
+
+        localStorage.setItem(
+          "auth",
+          JSON.stringify({ isAuthenticated: true, user: userData })
+        );
+
+        setIsAuthenticated(true);
+        setUser(userData);
+        toast.success("Welcome back!");
+        navigate("/");
+      } else {
+        setError(res?.message || "Invalid credentials. Please try again.");
+      }
     } catch (err: any) {
-      setError(err?.message || "Login failed");
+      setError(err?.message || err?.response?.data?.message || "Login failed. Connection error.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex bg-slate-100 dark:bg-slate-950 transition-colors">
-      
-      {/* LEFT SIDE */}
-      <div className="hidden lg:flex w-1/2 bg-gradient-to-br from-blue-700 via-indigo-700 to-purple-800 text-white p-16 flex-col justify-between">
-      <div className="flex flex-col justify-center h-full">
-  <h1 className="text-4xl font-bold">
-    Shivam Traders
-  </h1>
+    <div className="min-h-screen flex bg-[#F5FBDA] dark:bg-[#120311] transition-colors duration-300">
+      {/* LEFT SIDE BRANDING PANEL */}
+      <div className="hidden lg:flex w-1/2 bg-[#450C3F] text-[#F5FBDA] p-16 flex-col justify-between relative overflow-hidden">
+        <div className="absolute -right-20 -bottom-20 w-96 h-96 bg-[#B9D175]/20 rounded-full blur-3xl" />
+        <div className="absolute -left-20 -top-20 w-96 h-96 bg-[#D9EFBD]/10 rounded-full blur-3xl" />
 
-  <div className="mt-16">
-  <h2 className="text-6xl font-extrabold leading-tight">
-  Smart Trading
-  <br />
-  Made Simple
-</h2>
+        <div className="relative z-10">
+          <div className="flex items-center gap-3">
+            <span className="bg-[#B9D175] text-[#450C3F] font-black text-xl px-3 py-1 rounded-xl">
+              ST
+            </span>
+            <h1 className="text-2xl font-bold tracking-tight text-[#F5FBDA]">
+              Shivam Traders
+            </h1>
+          </div>
 
-<p className="mt-6 text-xl text-blue-100 max-w-lg leading-relaxed">
-  Manage your business, track orders,
-  inventory, suppliers and sales
-  from one powerful dashboard.
-</p>
+          <div className="mt-24">
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="text-5xl font-extrabold leading-tight"
+            >
+              Smart Trading <br />
+              <span className="text-[#B9D175]">Made Simple.</span>
+            </motion.h2>
+
+            <p className="mt-6 text-lg text-[#D9EFBD]/80 max-w-lg leading-relaxed">
+              Manage your inventory, track customer orders, evaluate sales performance, and optimize business processes in real time.
+            </p>
           </div>
         </div>
 
-        <div className="text-sm text-blue-200">
-          © 2026 Shivam Traders
+        <div className="relative z-10 text-sm text-[#D9EFBD]/60">
+          © {new Date().getFullYear()} Shivam Traders. All rights reserved.
         </div>
       </div>
 
-      {/* RIGHT SIDE */}
-      <div className="flex w-full lg:w-1/2 items-center justify-center px-6 bg-slate-50 dark:bg-slate-950">
-        
-      <div className=" w-full max-w-md bg-white dark:bg-slate-900 p-8 rounded-2xl shadow-2xl border  border-slate-200 dark:border-slate-700 ">
-          
+      {/* RIGHT SIDE FORM PANEL */}
+      <div className="flex w-full lg:w-1/2 items-center justify-center p-6 sm:p-12">
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="w-full max-w-md bg-white dark:bg-[#2A0727] p-8 sm:p-10 rounded-3xl shadow-xl border border-[#D9EFBD] dark:border-[#450C3F]"
+        >
           {/* HEADER */}
           <div className="mb-8 text-center">
-          <h2 className="text-3xl font-bold text-slate-900 dark:text-white">
-  Welcome Back
-</h2>
-
-<p className="text-slate-500 dark:text-slate-400 mt-2">
-  Login to continue
-</p>
+            <h2 className="text-3xl font-extrabold text-[#450C3F] dark:text-[#B9D175] tracking-tight">
+              Welcome Back
+            </h2>
+            <p className="text-sm text-slate-500 dark:text-[#D9EFBD]/70 mt-2">
+              Sign in to manage your trading dashboard
+            </p>
           </div>
 
-          {/* ERROR */}
+          {/* ERROR ALERT */}
           {error && (
-            <div className="mb-4 text-sm text-red-500 text-center">
+            <motion.div 
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mb-6 p-3.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-900/50 text-red-600 dark:text-red-400 text-sm text-center font-medium"
+            >
               {error}
-            </div>
+            </motion.div>
           )}
 
           {/* FORM */}
           <form className="space-y-5" onSubmit={handleSubmit}>
-            
-            {/* Mobile */}
+            {/* Mobile Input */}
             <div>
-              <label className="text-sm text-gray-600">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[#450C3F]/80 dark:text-[#D9EFBD] mb-2">
                 Mobile Number
               </label>
-              <input
-                name="mobile_no"
-                type="text"
-                value={form.mobile_no}
-                onChange={handleChange}
-                placeholder="Enter mobile number"
-                className=" w-full px-4 py-3 border border-slate-300 dark:border-slate-700 rounded-lg
-bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none"
-              />
+              <div className="relative">
+                <Phone size={18} className="absolute left-3.5 top-3.5 text-slate-400 dark:text-[#D9EFBD]/50" />
+                <input
+                  name="mobile_no"
+                  type="text"
+                  value={form.mobile_no}
+                  onChange={handleChange}
+                  placeholder="Enter registered mobile number"
+                  className="w-full pl-11 pr-4 py-3 bg-white dark:bg-[#1C051A] border border-[#D9EFBD] dark:border-[#450C3F] text-[#450C3F] dark:text-[#F5FBDA] rounded-xl text-sm font-medium outline-none focus:ring-2 focus:ring-[#B9D175] transition"
+                />
+              </div>
             </div>
 
-            {/* Password */}
+            {/* Password Input */}
             <div>
-              <div className="flex justify-between items-center">
-                <label className="text-sm text-gray-600">
+              <div className="flex justify-between items-center mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-[#450C3F]/80 dark:text-[#D9EFBD]">
                   Password
                 </label>
-                <span className="text-xs text-blue-600 cursor-pointer hover:underline">
+                <button
+                  type="button"
+                  className="text-xs font-semibold text-[#450C3F] dark:text-[#B9D175] hover:underline"
+                >
                   Forgot Password?
-                </span>
+                </button>
               </div>
 
-              <div className="relative mt-1">
+              <div className="relative">
+                <Lock size={18} className="absolute left-3.5 top-3.5 text-slate-400 dark:text-[#D9EFBD]/50" />
                 <input
                   name="password"
                   type={showPass ? "text" : "password"}
                   value={form.password}
                   onChange={handleChange}
                   placeholder="Enter password"
-                  className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10"
+                  className="w-full pl-11 pr-11 py-3 bg-white dark:bg-[#1C051A] border border-[#D9EFBD] dark:border-[#450C3F] text-[#450C3F] dark:text-[#F5FBDA] rounded-xl text-sm font-medium outline-none focus:ring-2 focus:ring-[#B9D175] transition"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPass(!showPass)}
-                  className="absolute right-3 top-2.5 text-gray-500"
+                  className="absolute right-3.5 top-3.5 text-slate-400 dark:text-[#D9EFBD]/50 hover:text-[#450C3F] dark:hover:text-[#F5FBDA]"
                 >
                   {showPass ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
 
-            {/* Login Button */}
+            {/* Login Action Button */}
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition disabled:opacity-60"
+              className="w-full bg-[#B9D175] hover:bg-[#a6bf60] text-[#450C3F] py-3.5 rounded-xl font-bold tracking-wide transition shadow-md flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed"
             >
-              {loading ? "Logging in..." : "Login"}
+              {loading ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Authenticating...
+                </>
+              ) : (
+                <>
+                  Sign In
+                  <ArrowRight size={18} />
+                </>
+              )}
             </button>
           </form>
 
-          {/* Divider */}
+          {/* DIVIDER */}
           <div className="flex items-center my-6">
-            <div className="grow border-t"></div>
-            <span className="mx-2 text-gray-400 text-sm">OR</span>
-            <div className="grow border-t"></div>
+            <div className="grow border-t border-[#D9EFBD] dark:border-[#450C3F]" />
+            <span className="mx-3 text-xs font-bold text-slate-400 dark:text-[#D9EFBD]/50 uppercase">
+              OR
+            </span>
+            <div className="grow border-t border-[#D9EFBD] dark:border-[#450C3F]" />
           </div>
 
-          {/* Google Login */}
-          <button className="w-full border py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-100">
+          {/* THIRD PARTY AUTH */}
+          <button
+            type="button"
+            className="w-full border border-[#D9EFBD] dark:border-[#450C3F] bg-white dark:bg-[#1C051A] text-[#450C3F] dark:text-[#F5FBDA] py-3 rounded-xl font-semibold text-sm flex items-center justify-center gap-3 hover:bg-[#F5FBDA]/50 dark:hover:bg-[#450C3F]/40 transition"
+          >
             <img
               src="https://www.svgrepo.com/show/475656/google-color.svg"
+              alt="Google"
               className="w-5 h-5"
             />
             Continue with Google
           </button>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

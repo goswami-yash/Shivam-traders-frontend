@@ -622,9 +622,35 @@ export default function CreateOrder() {
               <div key={i} className="dynamic-row">
                 <div className="w-full">
                   <label className="input-label">મજૂર પસંદ કરો</label>
-                  <select value={l.labourer_id || ""} onChange={(e) => { const u = [...form.labour]; u[i].labourer_id = Number(e.target.value); setForm({ ...form, labour: u }); }} className="input-field">
+                  <select
+                    value={l.labourer_id || ""}
+                    onChange={(e) => {
+                      const value = e.target.value;
+
+                      setForm({
+                        ...form,
+                        labour: form.labour.map((item, index) =>
+                          index === i
+                            ? {
+                              ...item,
+                              labourer_id: value ? Number(value) : null,
+                            }
+                            : item
+                        ),
+                      });
+                    }}
+                    className="input-field"
+                  >
                     <option value="">મજૂર પસંદ કરો</option>
-                    {labours.map(lb => <option key={lb.labourer_id} value={lb.labourer_id}>{lb.name}</option>)}
+
+                    {labours.map((lb, index) => (
+                      <option
+                        key={`${lb.labourer_id}-${index}`}
+                        value={lb.labourer_id}
+                      >
+                        {lb.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
                 <div className="w-full">
@@ -1144,26 +1170,26 @@ export default function CreateOrder() {
                 <option value="">ભાગીદારનું નામ પસંદ કરો</option>
                 {partnersList.map((p, idx) => <option key={idx} value={p.name}>{p.name}</option>)}
               </select>
-              </div>
-              </div>
             </div>
-       
-            {/* ERRORS */}
-            {weightError && <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl font-semibold text-sm">{weightError}</div>}
-            {itemError && <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl font-semibold text-sm">{itemError}</div>}
+          </div>
+        </div>
 
-            {/* FOOTER ACTION BUTTON */}
-            <div className="flex justify-end pt-2">
-              <button type="submit" disabled={submitStep !== "idle"} className="btn-primary">
-                {submitStep === "idle" ? "Update Order Now" :
-                 submitStep === "uploading"
+        {/* ERRORS */}
+        {weightError && <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl font-semibold text-sm">{weightError}</div>}
+        {itemError && <div className="p-3 bg-red-50 border border-red-200 text-red-600 rounded-xl font-semibold text-sm">{itemError}</div>}
+
+        {/* FOOTER ACTION BUTTON */}
+        <div className="flex justify-end pt-2">
+          <button type="submit" disabled={submitStep !== "idle"} className="btn-primary">
+            {submitStep === "idle" ? "Update Order Now" :
+              submitStep === "uploading"
                 ? "2. Uploading Photo..."
                 : submitStep === "done"
                   ? "Success!"
                   : "Update Order Now"}
-              </button>
-            </div>
-          </form>
+          </button>
         </div>
-        );
+      </form>
+    </div>
+  );
 }

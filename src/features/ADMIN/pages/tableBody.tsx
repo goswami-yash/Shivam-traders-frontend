@@ -198,7 +198,7 @@ const TableBody = ({ tableConfig, data, type, refreshData, setPagination, pagina
             </table>
           </div>
           <div className="p-5 w-full">
-
+          <h1>Total Count: {pagination.totalCount}</h1>
             {tableData?.length > 0 && (
               <Pagination
                 pagination={pagination}

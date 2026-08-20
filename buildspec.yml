@@ -1,0 +1,38 @@
+version: 0.2
+
+env:
+  variables:
+    IMAGE_REPO_NAME: "shivam-traders-frontend"
+
+phases:
+  install:
+    commands:
+      - echo "Checking runtime environment..."
+      - aws --version
+      - docker --version
+
+  pre_build:
+    commands:
+      - echo "Logging in to Amazon ECR..."
+      - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      - ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION:-ap-south-1}.amazonaws.com"
+      - aws ecr get-login-password --region ${AWS_DEFAULT_REGION:-ap-south-1} | docker login --username AWS --password-stdin $ECR_REGISTRY
+      
+      - echo "Setting build tag metadata..."
+      - echo -n "$CODEBUILD_BUILD_ID" > /tmp/build_id.out
+      - printf "%s/%s:%s" "$ECR_REGISTRY" "$IMAGE_REPO_NAME" "$(cat /tmp/build_id.out)" > /tmp/build_tag.out
+
+  build:
+    commands:
+      - echo "Executing build script..."
+      - sh bin/build.sh "$CODEBUILD_BUILD_ID" "$IMAGE_REPO_NAME" "$PROJECT_ENV"
+
+  post_build:
+    commands:
+      - echo "Executing post-build steps..."
+      - sh bin/postBuild.sh "$CODEBUILD_BUILD_ID" "$IMAGE_REPO_NAME" "$PROJECT_ENV"
+
+artifacts:
+  discard-paths: true
+  files:
+    - /tmp/build.json

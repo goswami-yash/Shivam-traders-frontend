@@ -18,7 +18,7 @@ export default function OrderList() {
     };
 
     return (
-        <div className="min-h-screen bg-[#f5f7fb] p-4 md:p-6">
+        <div className="min-h-screen p-4 md:p-6">
             <div className="max-w-7xl mx-auto">
                 <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 md:p-6 flex flex-col">
                     {/* Title */}

@@ -1,36 +1,31 @@
-import { createContext, useContext, useState, useEffect } from "react";
-import { logout } from "../services/AuthService";
+import { createContext, useContext, useState } from "react";
+import { AuthContextType, UserType } from "../types/AuthTypes";
 
-const AuthContext = createContext<any>(null);
+const AuthContext = createContext<AuthContextType>(null);
 
 export const AuthProvider = ({ children }: any) => {
-  const [user, setUser] = useState<any>(null);
+  const storedAuth = localStorage.getItem("auth");
+  const parsedAuth = storedAuth ? JSON.parse(storedAuth) : null;
+  const [user, setUser] = useState<UserType | null>(parsedAuth?.user || null);
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(
+    !!parsedAuth?.isAuthenticated,
+  );
 
-  useEffect(() => {
-    const stored = localStorage.getItem("auth");
-    if (stored) {
-      setUser(JSON.parse(stored));
-    }
-  }, []);
-
-  const loginUser = (userData: any) => {
-    localStorage.setItem("auth", JSON.stringify(userData));
-    setUser(userData);
+  const logout = () => {
+    setIsAuthenticated(false);
+    setUser(null);
+    localStorage.removeItem("auth");
   };
-
-  const logoutUser = async () => {
-    try {
-      await logout();
-    } catch (err) {
-      console.error("Logout API failed", err);
-    } finally {
-      localStorage.removeItem("auth");
-      setUser(null);
-    }
-  };
-
   return (
-    <AuthContext.Provider value={{ user, loginUser, logoutUser }}>
+    <AuthContext.Provider
+      value={{
+        logout,
+        user,
+        isAuthenticated,
+        setUser,
+        setIsAuthenticated,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );

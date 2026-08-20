@@ -19,91 +19,99 @@ export default {
     },
     extend: {
       colors: {
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        // primary: {
-        // 	DEFAULT: 'hsl(var(--primary))',
-        // 	foreground: 'hsl(var(--primary-foreground))'
-        // },
-        // secondary: {
-        // 	DEFAULT: 'hsl(var(--secondary))',
-        // 	foreground: 'hsl(var(--secondary-foreground))'
-        // },
+        // Custom 4-Color Palette Configuration
+        brand: {
+          plum: {
+            DEFAULT: "#450C3F", // Deep Plum
+            dark: "#2A0727",   // Dark Plum Container
+            darker: "#1C051A", // Deep Dark BG
+          },
+          olive: {
+            DEFAULT: "#B9D175", // Olive Sage Accent / Primary Buttons
+            hover: "#A6BF60",
+          },
+          sage: {
+            DEFAULT: "#D9EFBD", // Soft Sage / Light Borders
+            light: "#EAF7D5",
+          },
+          cream: {
+            DEFAULT: "#F5FBDA", // Cream Light Background / Text Light
+            light: "#FAFDEB",
+          },
+        },
+
+        // Theme Functional Mappings
+        border: "hsl(var(--border, 85 53% 84%))",
+        input: "hsl(var(--input, 85 53% 84%))",
+        ring: "#B9D175",
+        background: "#F5FBDA",
+        foreground: "#450C3F",
+
         primary: {
-          DEFAULT: "#2563EB", // Main Blue
-          light: "#60A5FA",   // Light Blue
-          dark: "#1D4ED8",    // Hover Blue
-          darker: "#1E40AF",  // Active Blue
-          contrast: "#DBEAFE",
+          DEFAULT: "#450C3F",       // Deep Plum Primary
+          light: "#B9D175",         // Olive Highlight
+          dark: "#2A0727",          // Dark Container
+          darker: "#1C051A",        // Dark Mode Deep Background
+          contrast: "#F5FBDA",
         
-          pagebgfrom: "#F8FAFC",
-          pagebgvia: "#F1F5F9",
-          pagebgto: "#E2E8F0",
-          pagebgdark: "#0F172A",
+          pagebgfrom: "#F5FBDA",
+          pagebgvia: "#EAF7D5",
+          pagebgto: "#D9EFBD",
+          pagebgdark: "#120311",
         },
         
         secondary: {
-          DEFAULT: "#F97316", // Orange
-          light: "#FB923C",
-          dark: "#EA580C",
-          darker: "#C2410C",
-          contrast: "#FED7AA",
+          DEFAULT: "#B9D175",      // Olive Sage Secondary Accent
+          light: "#D9EFBD",
+          dark: "#9EB658",
+          darker: "#7A8F3D",
+          contrast: "#450C3F",
         },
+
         destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+          DEFAULT: "#EF4444",
+          foreground: "#FFFFFF",
         },
         muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+          DEFAULT: "#D9EFBD",
+          foreground: "#450C3F",
         },
         accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+          DEFAULT: "#B9D175",
+          foreground: "#450C3F",
         },
         popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+          DEFAULT: "#FFFFFF",
+          foreground: "#450C3F",
         },
         card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
+          DEFAULT: "#FFFFFF",
+          foreground: "#450C3F",
         },
         sidebar: {
-          DEFAULT: "hsl(var(--sidebar-background))",
-          foreground: "hsl(var(--sidebar-foreground))",
-          primary: "hsl(var(--sidebar-primary))",
-          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
-          accent: "hsl(var(--sidebar-accent))",
-          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
-          border: "hsl(var(--sidebar-border))",
-          ring: "hsl(var(--sidebar-ring))",
+          DEFAULT: "#450C3F",
+          foreground: "#F5FBDA",
+          primary: "#B9D175",
+          "primary-foreground": "#450C3F",
+          accent: "#2A0727",
+          "accent-foreground": "#D9EFBD",
+          border: "#D9EFBD",
+          ring: "#B9D175",
         },
       },
       borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
+        lg: "var(--radius, 1rem)",
+        md: "calc(var(--radius, 1rem) - 2px)",
+        sm: "calc(var(--radius, 1rem) - 4px)",
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
       },
       animation: {
@@ -112,5 +120,4 @@ export default {
       },
     },
   },
-  // plugins: [require("tailwindcss-animate")],
 } satisfies Config;

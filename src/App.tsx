@@ -1,11 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
-import { AuthProvider } from "@/features/AUTH/context/AuthContext";
+import { AuthProvider } from "./features/AUTH/context/AuthContext";
+import AppRoutes from "./AppRoutes";
 import { AppToaster } from "./shared/components/ui/AppToaster";
 import { useEffect } from "react";
 import { setRedirectToLogin } from "./shared/services/redirectService";
 import { abort } from "@/shared/utils/abortController";
-import AppRoutes from "./AppRoutes";
 
 const App = () => {
   return (
@@ -24,7 +24,6 @@ const AppContent = () => {
   // const isFirstRender = useRef(true);
 
   // redirect handler
-
   useEffect(() => {
     setRedirectToLogin(() => {
       localStorage.clear();
@@ -42,7 +41,7 @@ const AppContent = () => {
 
   //   abort.abortAll();
   // }, [location.pathname]);
-
+  
   return <AppRoutes />;
 };
 

@@ -2,30 +2,30 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Login from "./features/AUTH/components/Login";
 import { RedirectIfAuth, RequireAuth } from "./providers/AuthGuard";
-import CreateOrder from "./features/ORDERS/components/CreateOrder";
 import OrderList from "./features/ORDERS_LIST/components/OrderList";
 import SelectOrder from "./features/ORDERS_LIST/components/SelectOrder";
 import DieselAdd from "./features/ORDERS_LIST/components/dieselAdd";
 import Dashboard from "./features/DASHBOARD/components/Dashboard";
 import UserManagementPage from "./features/UserManagement/pages/UserManagementPage";
 import AdminPage from "./features/ADMIN/pages/AdminPage";
-import Drivers from "./features/ADMIN/components/Drivers";
-import Vehicles from "./features/ADMIN/components/Vehicles";
+import Drivers from "./features/ADMIN/Drivers/components/Drivers";
+import Vehicles from "./features/ADMIN/Vehicles/components/Vehicles";
 import AddTableBody from "./features/ADMIN/pages/AddTableBody";
-import CustomerPage from "./features/ADMIN/components/Customer";
-import SupplierPage from "./features/ADMIN/components/Supplier";
-import  ItemPage  from "./features/ADMIN/components/Item";
-import PlotPage from "./features/ADMIN/components/Plot";
-import PartnerPage from "./features/ADMIN/components/Partner";
-import LabourerPage from "./features/ADMIN/components/Labourer";
-import TransporterPage from "./features/ADMIN/components/Transporter";
-import CustomerAddressPage from "./features/ADMIN/components/CustomerAddress";
-import CustomerPaymentPage from "./features/ADMIN/components/CustomerPayment";
-import CustomerItemPricePage from "./features/ADMIN/components/CustomerItemPrice";
-import LabourerAssignPlotPage from "./features/ADMIN/components/LabourerAssignPlot";
-import SupplierAddressPage from "./features/ADMIN/components/SupplierAddress";
-import SupplierPaymentPage from "./features/ADMIN/components/SupplierPayment";
-import SupplierItemPricePage from "./features/ADMIN/components/SupplierItemPrice";
+import CustomerPage from "./features/ADMIN/Customer/components/Customer";
+import SupplierPage from "./features/ADMIN/Supplier/components/Supplier";
+import  ItemPage  from "./features/ADMIN/Item/components/Item";
+import PlotPage from "./features/ADMIN/Plot/components/Plot";
+import PartnerPage from "./features/ADMIN/Partner/components/Partner";
+import LabourerPage from "./features/ADMIN/Labourer/components/Labourer";
+import TransporterPage from "./features/ADMIN/Transporter/components/Transporter";
+import CustomerAddressPage from "./features/ADMIN/Customer/components/CustomerAddressPage";
+import CustomerPaymentPage from "./features/ADMIN/Customer/components/CustomerPayment";
+import CustomerItemPricePage from "./features/ADMIN/Customer/components/CustomerItemPrice";
+import LabourerAssignPlotPage from "./features/ADMIN/Labourer/components/LabourerAssignPlot";
+import SupplierAddressPage from "./features/ADMIN/Supplier/components/SupplierAddressPage";
+import SupplierPaymentPage from "./features/ADMIN/Supplier/components/SupplierItemPrice";
+import SupplierItemPricePage from "./features/ADMIN/Supplier/components/SupplierItemPrice";
+import { OrdersPage } from "./features/ORDERS/components/OrderPage";
 
 
 function AppRoutes() {
@@ -39,8 +39,8 @@ function AppRoutes() {
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />
             <Route
-              path="/create-order"
-              element={<CreateOrder />}
+              path="/orders"
+              element={<OrdersPage />}
             />
             <Route path="/Order-list" element={<OrderList />} />
             <Route path="/select-order" element={<SelectOrder />} />
