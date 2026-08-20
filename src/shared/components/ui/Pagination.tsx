@@ -24,6 +24,7 @@ export const Pagination = ({
   handlePagination,
   setPagination,
 }: PaginationProps) => {
+  
   const totalPages = Math.ceil(pagination.totalCount / pagination.pageSize);
 
   const goToFirst = () =>
@@ -95,10 +96,19 @@ export const Pagination = ({
           <SelectTrigger className="w-15">
             <SelectValue placeholder="Select page size" />
           </SelectTrigger>
-          <SelectContent className="p-0">
+                    <SelectContent className="min-w-[9rem] rounded-lg border border-gray-200 bg-white p-1 shadow-lg dark:border-gray-800 dark:bg-gray-900">
             {PAGE_SIZES.map((item) => (
-              <SelectItem key={item} value={item.toString()}>
-                {item}
+              <SelectItem
+                key={item}
+                value={item.toString()}
+                /* pl-8 gives space for the check icon, pr-3 ensures end spacing */
+                className="relative flex w-full cursor-pointer items-center justify-between border-b border-gray-100 py-2.5 pl-8 pr-3 text-sm text-gray-700 transition-colors last:border-b-0 hover:bg-gray-100 focus:bg-gray-100 data-[state=checked]:bg-blue-50 data-[state=checked]:font-semibold data-[state=checked]:text-blue-600 dark:border-gray-800 dark:text-gray-200 dark:hover:bg-gray-800 dark:focus:bg-gray-800 dark:data-[state=checked]:bg-blue-950/50 dark:data-[state=checked]:text-blue-400"
+              >
+                {/* Container with flex & gap to keep icon/label separated from the number */}
+                <div className="flex items-center gap-2">
+                  <span className="font-medium">{item}</span>
+
+                </div>
               </SelectItem>
             ))}
           </SelectContent>

@@ -61,7 +61,7 @@ function ErrorFallback({
     window.location.href = "/";
   };
 
-  const auth = JSON.parse(localStorage.getItem("auth") || "{}");
+  const auth = JSON.parse(localStorage.getItem("token") || "{}");
   
   const isAuthenticated = auth?.isAuthenticated === true;
 

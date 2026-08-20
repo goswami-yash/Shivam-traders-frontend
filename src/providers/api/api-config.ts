@@ -91,12 +91,6 @@ export const API_ENDPOINTS = {
     vehicleAssignmentDelete: "/admin/labourer/list",
     getvehicleAssignmentById: "/admin/labourer/details/by_id",
 
-    labourPlotAssignmentList: "/admin/labour-plot-assignment/list",
-    labourPlotAssignmentCreate: "/admin/labour-plot-assignment/create",
-    labourPlotAssignmentUpdate: "/admin/labour-plot-assignment/update",
-    labourPlotAssignmentDelete: "/admin/labour-plot-assignment/delete",
-    labourPlotAssignmentById: "/admin/labour-plot-assignment/details",
-
     getCustomerAddressList: '/admin/customer/address/list',
     AddCustomerAddress: '/admin/customer/address/create',
     UpdateCustomerAddress: '/admin/customer/address/update',

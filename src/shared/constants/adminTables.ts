@@ -1,6 +1,7 @@
 import { title } from "process";
 import { text } from "stream/consumers";
 
+import { API_ENDPOINTS } from "@/providers/api/api-config";
 //-------------------------------------------
 //-------- ADMIN SERVICE LIST------- //
 //------------------------------------------
@@ -1495,7 +1496,6 @@ export const ADDConfig = {
 
 export const PAGE_SIZES = [3, 15, 20, 50, 100];
 
-import { API_ENDPOINTS } from "@/providers/api/api-config";
 
 export const relationshipConfig = {
   vehicleAssignment: {
