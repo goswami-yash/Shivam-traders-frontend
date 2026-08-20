@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { AuthProvider } from "@/features/AUTH/context/AuthContext";
 import { AppToaster } from "./shared/components/ui/AppToaster";
@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import { setRedirectToLogin } from "./shared/services/redirectService";
 import { abort } from "@/shared/utils/abortController";
 import AppRoutes from "./AppRoutes";
+import { useAuth } from "@/features/AUTH/context/AuthContext";
+
 
 const App = () => {
   return (
@@ -19,29 +21,27 @@ const App = () => {
 };
 
 const AppContent = () => {
+  const { forceLogout } = useAuth();
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
   // const isFirstRender = useRef(true);
 
   // redirect handler
 
   useEffect(() => {
-    setRedirectToLogin(() => {
-      localStorage.clear();
+    setRedirectToLogin(async() => {
+     
       abort.abortAll(); // ✅ cancel all API
+      
+      forceLogout();  
+      console.log("app")
       navigate("/login");
     });
   }, [navigate]);
 
-  // cancel API on route change
-  // useEffect(() => {
-  //   if (isFirstRender.current) {
-  //     isFirstRender.current = false;
-  //     return;
-  //   }
-
-  //   abort.abortAll();
-  // }, [location.pathname]);
+  useEffect(() => {
+    abort.abortAll();
+  }, [location.pathname]);
 
   return <AppRoutes />;
 };

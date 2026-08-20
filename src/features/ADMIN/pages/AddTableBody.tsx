@@ -37,7 +37,7 @@ const addConfigs: Record<string, any> = {
     CustomerAddress: CustomerAddressADD,
     CustomerPayment: CustomerPaymentADD,
     CustomerItemPrice: CustomerItemPriceADD,
-    LabourerAssignPlot :LabourerAssignPlotADD,
+    LabourerAssignPlot: LabourerAssignPlotADD,
     SupplierAddress: SupplierAddressADD,
     SupplierPayment: SupplierPaymentADD,
     SupplierItemPrice: SupplierItemPriceADD,
@@ -47,12 +47,12 @@ export default function AddTableBody() {
     const navigate = useNavigate();
     const { type } = useParams();
     const [dropdowns, setDropdowns] = useState<any>({});
-    console.log("type =", type);
+
     const config = useMemo(
         () => addConfigs[type as string],
         [type]
     );
-    console.log("config =", config);
+
     useEffect(() => {
         if (config) {
             loadDropdowns();
