@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 
+
 buildId=$1
 serviceName=$2
 branch=$3

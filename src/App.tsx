@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import {useLocation, useNavigate } from "react-router-dom";
 import { TooltipProvider } from "@/shared/components/ui/tooltip";
 import { AuthProvider } from "./features/AUTH/context/AuthContext";
 import AppRoutes from "./AppRoutes";
@@ -19,15 +19,19 @@ const App = () => {
 };
 
 const AppContent = () => {
+  const { forceLogout } = useAuth();
   const navigate = useNavigate();
-  // const location = useLocation();
+  const location = useLocation();
   // const isFirstRender = useRef(true);
 
   // redirect handler
   useEffect(() => {
-    setRedirectToLogin(() => {
-      localStorage.clear();
+    setRedirectToLogin(async() => {
+     
       abort.abortAll(); // ✅ cancel all API
+      
+      forceLogout();  
+      console.log("app")
       navigate("/login");
     });
   }, [navigate]);

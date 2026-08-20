@@ -10,6 +10,8 @@ import UserManagementPage from "./features/UserManagement/pages/UserManagementPa
 import AdminPage from "./features/ADMIN/pages/AdminPage";
 import Drivers from "./features/ADMIN/Drivers/components/Drivers";
 import Vehicles from "./features/ADMIN/Vehicles/components/Vehicles";
+import Drivers from "./features/ADMIN/Drivers/components/Drivers";
+import Vehicles from "./features/ADMIN/Vehicles/components/Vehicles";
 import AddTableBody from "./features/ADMIN/pages/AddTableBody";
 import CustomerPage from "./features/ADMIN/Customer/components/Customer";
 import SupplierPage from "./features/ADMIN/Supplier/components/Supplier";
