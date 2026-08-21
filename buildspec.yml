@@ -3,34 +3,68 @@ version: 0.2
 env:
   variables:
     IMAGE_REPO_NAME: "shivam-traders-frontend"
+    DEPLOY_ENV: "production"
 
 phases:
+
   install:
     commands:
+      - echo "=========================================="
+      - echo "INSTALL PHASE"
+      - echo "=========================================="
       - echo "Checking runtime environment..."
       - aws --version
       - docker --version
+      - echo "Build number: $CODEBUILD_BUILD_NUMBER"
+      - echo "Repository: $IMAGE_REPO_NAME"
+      - echo "Deployment environment: $DEPLOY_ENV"
 
   pre_build:
     commands:
+      - echo "=========================================="
+      - echo "PRE-BUILD PHASE"
+      - echo "=========================================="
+      - echo "Getting AWS account ID..."
+      - export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+      - export AWS_REGION="${AWS_DEFAULT_REGION:-ap-south-1}"
+      - export ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
+      - echo "AWS Account: $AWS_ACCOUNT_ID"
+      - echo "AWS Region: $AWS_REGION"
+      - echo "ECR Registry: $ECR_REGISTRY"
+
       - echo "Logging in to Amazon ECR..."
-      - AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-      - ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION:-ap-south-1}.amazonaws.com"
-      - aws ecr get-login-password --region ${AWS_DEFAULT_REGION:-ap-south-1} | docker login --username AWS --password-stdin $ECR_REGISTRY
-      
-      - echo "Setting build tag metadata..."
-      - echo -n "$CODEBUILD_BUILD_ID" > /tmp/build_id.out
-      - printf "%s/%s:%s" "$ECR_REGISTRY" "$IMAGE_REPO_NAME" "$(cat /tmp/build_id.out)" > /tmp/build_tag.out
+      - aws ecr get-login-password --region "$AWS_REGION" | docker login --username AWS --password-stdin "$ECR_REGISTRY"
+
+      - echo "ECR login successful"
+
+      - echo "=========================================="
+      - echo "Creating production build tag..."
+      - echo "=========================================="
+
+      - export IMAGE_TAG="${CODEBUILD_BUILD_NUMBER}_prod"
+      - export FULL_IMAGE_NAME="${ECR_REGISTRY}/${IMAGE_REPO_NAME}:${IMAGE_TAG}"
+
+      - echo "IMAGE_TAG=$IMAGE_TAG"
+      - echo "FULL_IMAGE_NAME=$FULL_IMAGE_NAME"
+
+      - echo "$IMAGE_TAG" > /tmp/build_tag.out
+      - echo "$FULL_IMAGE_NAME" > /tmp/build_ecr_image.out
 
   build:
     commands:
-      - echo "Executing build script..."
-      - sh bin/build.sh "$CODEBUILD_BUILD_ID" "$IMAGE_REPO_NAME" "$PROJECT_ENV"
+      - echo "=========================================="
+      - echo "BUILD PHASE"
+      - echo "=========================================="
+      - echo "Building Docker image..."
+      - sh bin/build.sh "$IMAGE_TAG" "$IMAGE_REPO_NAME"
 
   post_build:
     commands:
-      - echo "Executing post-build steps..."
-      - sh bin/postBuild.sh "$CODEBUILD_BUILD_ID" "$IMAGE_REPO_NAME" "$PROJECT_ENV"
+      - echo "=========================================="
+      - echo "POST-BUILD PHASE"
+      - echo "=========================================="
+      - echo "Pushing production image..."
+      - sh bin/postBuild.sh "$IMAGE_TAG" "$IMAGE_REPO_NAME"
 
 artifacts:
   discard-paths: true

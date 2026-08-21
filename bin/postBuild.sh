@@ -1,94 +1,96 @@
 #!/bin/bash
-set -e
 
-buildId=$1
-serviceName=$2
-branch=$3
+set -Eeuo pipefail
 
-# =========================================================
-# AWS / ECR Configuration
-# =========================================================
+IMAGE_TAG="$1"
+SERVICE_NAME="$2"
 
 AWS_REGION="${AWS_DEFAULT_REGION:-ap-south-1}"
 AWS_ACCOUNT_ID="${AWS_ACCOUNT_ID:?AWS_ACCOUNT_ID is not set}"
 
 ECR_REGISTRY="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com"
 
-# =========================================================
-# Branch / Environment / Tag Setup
-# =========================================================
+LOCAL_IMAGE="${SERVICE_NAME}:${IMAGE_TAG}"
+ECR_IMAGE="${ECR_REGISTRY}/${SERVICE_NAME}:${IMAGE_TAG}"
 
-case "$branch" in
-    */main|*/master|main|master|production|prod)
-        tagName="${buildId}_prod"
-        env="production"
+echo "=========================================="
+echo "POST BUILD"
+echo "=========================================="
+
+echo "Service       : $SERVICE_NAME"
+echo "Image Tag     : $IMAGE_TAG"
+echo "Local Image   : $LOCAL_IMAGE"
+echo "ECR Image     : $ECR_IMAGE"
+echo "AWS Region    : $AWS_REGION"
+echo "=========================================="
+
+###########################################
+# Error handling
+###########################################
+
+trap '
+    echo ""
+    echo "=========================================="
+    echo "ERROR: postBuild.sh failed"
+    echo "Line    : $LINENO"
+    echo "Command : $BASH_COMMAND"
+    echo "=========================================="
+' ERR
+
+###########################################
+# Validate production tag
+###########################################
+
+case "$IMAGE_TAG" in
+    *_prod)
+        echo "✓ Production tag confirmed: $IMAGE_TAG"
         ;;
-
     *)
-        tagName="${buildId}_staging"
-        env="staging"
+        echo "ERROR: Production tag required."
+        echo "Received: $IMAGE_TAG"
+        echo "Expected example: 1_prod"
+        exit 1
         ;;
 esac
 
-echo "=========================================="
-echo "DEPLOYMENT INFORMATION"
-echo "=========================================="
-echo "Build ID     : $buildId"
-echo "Service      : $serviceName"
-echo "Branch/Env   : $branch"
-echo "Environment  : $env"
-echo "Docker Tag   : $tagName"
-echo "ECR Registry : $ECR_REGISTRY"
-echo "=========================================="
+###########################################
+# Validate completion marker
+###########################################
 
-# =========================================================
-# Verify build.sh Completion Marker
-# =========================================================
-
-markerFile="/tmp/docker_build_complete_${buildId}.marker"
+MARKER_FILE="/tmp/docker_build_complete_${IMAGE_TAG}.marker"
 
 echo "=========================================="
-echo "Validating build.sh completion..."
+echo "CHECKING BUILD MARKER"
 echo "=========================================="
 
-if [ ! -f "$markerFile" ]; then
-    echo "ERROR: Build completion marker missing:"
-    echo "$markerFile"
+if [ ! -f "$MARKER_FILE" ]; then
+    echo "ERROR: Build completion marker not found:"
+    echo "$MARKER_FILE"
     exit 1
 fi
 
-expectedTag=$(head -n 1 "$markerFile")
+EXPECTED_TAG=$(head -n 1 "$MARKER_FILE")
 
-echo "Expected Tag : $tagName"
-echo "Marker Tag   : $expectedTag"
-
-if [ "$expectedTag" != "$tagName" ]; then
-    echo "ERROR: Tag mismatch in marker."
-    echo "Expected: $tagName"
-    echo "Found   : $expectedTag"
+if [ "$EXPECTED_TAG" != "$IMAGE_TAG" ]; then
+    echo "ERROR: Build tag mismatch"
+    echo "Expected: $IMAGE_TAG"
+    echo "Found   : $EXPECTED_TAG"
     exit 1
 fi
 
-buildTimestamp=$(tail -n 1 "$markerFile")
-currentTimestamp=$(date -u +%s)
-timeDiff=$((currentTimestamp - buildTimestamp))
+echo "✓ Build marker verified"
 
-echo "✓ Marker verified (age: ${timeDiff}s)"
-
-# =========================================================
-# Validate Docker Image
-# =========================================================
+###########################################
+# Validate Docker image
+###########################################
 
 echo "=========================================="
-echo "Validating Docker Image"
+echo "VALIDATING DOCKER IMAGE"
 echo "=========================================="
 
-echo "Expected local image:"
-echo "${serviceName}:${tagName}"
-
-if ! docker image inspect "${serviceName}:${tagName}" >/dev/null 2>&1; then
-    echo "ERROR: Local Docker image not found:"
-    echo "${serviceName}:${tagName}"
+if ! docker image inspect "$LOCAL_IMAGE" >/dev/null 2>&1; then
+    echo "ERROR: Docker image not found:"
+    echo "$LOCAL_IMAGE"
 
     echo ""
     echo "Available Docker images:"
@@ -97,78 +99,88 @@ if ! docker image inspect "${serviceName}:${tagName}" >/dev/null 2>&1; then
     exit 1
 fi
 
-imageId=$(docker image inspect "${serviceName}:${tagName}" \
+IMAGE_ID=$(docker image inspect "$LOCAL_IMAGE" \
     --format '{{.Id}}' |
     cut -d: -f2 |
     cut -c1-12)
 
-imageSize=$(docker image inspect "${serviceName}:${tagName}" \
+IMAGE_SIZE=$(docker image inspect "$LOCAL_IMAGE" \
     --format '{{.Size}}' |
     awk '{printf "%.2f MB", $1/1024/1024}')
 
-created=$(docker image inspect "${serviceName}:${tagName}" \
+CREATED=$(docker image inspect "$LOCAL_IMAGE" \
     --format '{{.Created}}')
 
-echo "Image ID : $imageId"
-echo "Size     : $imageSize"
-echo "Created  : $created"
+echo "Image ID : $IMAGE_ID"
+echo "Size     : $IMAGE_SIZE"
+echo "Created  : $CREATED"
 
-# =========================================================
-# Validate Nginx
-# =========================================================
+###########################################
+# Validate nginx directory
+###########################################
 
 echo "=========================================="
-echo "Validating Nginx"
+echo "VALIDATING NGINX HTML"
 echo "=========================================="
-
-echo "Checking /usr/share/nginx/html..."
 
 if ! docker run --rm \
     --entrypoint="" \
-    "${serviceName}:${tagName}" \
+    "$LOCAL_IMAGE" \
     test -d /usr/share/nginx/html; then
 
-    echo "ERROR: /usr/share/nginx/html directory not found"
+    echo "ERROR: /usr/share/nginx/html not found"
     exit 1
 fi
 
-echo "Checking index.html..."
+echo "✓ Nginx HTML directory exists"
+
+###########################################
+# Validate index.html
+###########################################
 
 if ! docker run --rm \
     --entrypoint="" \
-    "${serviceName}:${tagName}" \
+    "$LOCAL_IMAGE" \
     test -f /usr/share/nginx/html/index.html; then
 
     echo "ERROR: index.html not found"
     exit 1
 fi
 
-fileCount=$(docker run --rm \
+echo "✓ index.html exists"
+
+###########################################
+# Count frontend files
+###########################################
+
+FILE_COUNT=$(docker run --rm \
     --entrypoint="" \
-    "${serviceName}:${tagName}" \
+    "$LOCAL_IMAGE" \
     find /usr/share/nginx/html -type f | wc -l)
 
-echo "Files in image: $fileCount"
+echo "Frontend files: $FILE_COUNT"
 
-echo "Checking Nginx configuration..."
-
-if ! docker run --rm \
-    --entrypoint="" \
-    "${serviceName}:${tagName}" \
-    nginx -t >/dev/null 2>&1; then
-
-    echo "ERROR: Nginx configuration check failed"
-    exit 1
-fi
-
-echo "✓ Docker image validation passed"
-
-# =========================================================
-# ECR Login
-# =========================================================
+###########################################
+# Validate nginx configuration
+###########################################
 
 echo "=========================================="
-echo "Logging in to ECR"
+echo "VALIDATING NGINX CONFIGURATION"
+echo "=========================================="
+
+docker run --rm \
+    --entrypoint="" \
+    "$LOCAL_IMAGE" \
+    nginx -t
+
+echo "✓ Nginx configuration valid"
+
+###########################################
+# ECR Login
+###########################################
+
+echo "=========================================="
+echo "ECR LOGIN"
 echo "=========================================="
 
 aws ecr get-login-password \
@@ -179,44 +191,57 @@ docker login \
 
 echo "✓ ECR login successful"
 
-# =========================================================
-# Create ECR Image Tag
-# =========================================================
-
-ecrTargetTag="${ECR_REGISTRY}/${serviceName}:${tagName}"
+###########################################
+# Create ECR tag
+###########################################
 
 echo "=========================================="
-echo "Creating ECR Image Tag"
+echo "TAGGING IMAGE FOR ECR"
 echo "=========================================="
 
-echo "Local Image:"
-echo "${serviceName}:${tagName}"
+echo "FROM:"
+echo "$LOCAL_IMAGE"
 
 echo ""
 
-echo "ECR Image:"
-echo "$ecrTargetTag"
+echo "TO:"
+echo "$ECR_IMAGE"
 
-docker tag \
-    "${serviceName}:${tagName}" \
-    "$ecrTargetTag"
+docker tag "$LOCAL_IMAGE" "$ECR_IMAGE"
 
 echo "✓ ECR tag created"
 
-# =========================================================
-# Push to ECR
-# =========================================================
+###########################################
+# Verify ECR tag
+###########################################
+
+if ! docker image inspect "$ECR_IMAGE" >/dev/null 2>&1; then
+    echo "ERROR: ECR image tag was not created"
+    exit 1
+fi
+
+echo "✓ ECR image verified"
+
+###########################################
+# Push image
+###########################################
 
 echo "=========================================="
-echo "Pushing Docker Image → ECR"
+echo "PUSHING IMAGE TO ECR"
 echo "=========================================="
 
-docker push "$ecrTargetTag"
+docker push "$ECR_IMAGE"
+
+###########################################
+# Success
+###########################################
 
 echo "=========================================="
-echo "✓ ECR PUSH SUCCESS"
+echo "✓ PRODUCTION DEPLOYMENT IMAGE READY"
 echo "=========================================="
-echo "Environment : $env"
-echo "Tag         : $tagName"
-echo "Image       : $ecrTargetTag"
+
+echo "Environment : production"
+echo "Tag         : $IMAGE_TAG"
+echo "Image       : $ECR_IMAGE"
+
 echo "=========================================="
